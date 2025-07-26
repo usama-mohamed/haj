@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام إدارة الحج المتكامل - الشاشات الفرعية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+        }
+        .arabic-title {
+            font-family: 'Amiri', serif;
+        }
+        .islamic-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f0f9ff' fill-opacity='0.1'%3E%3Cpath d='M30 30c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20zm0 0c0 11.046 8.954 20 20 20s20-8.954 20-20-8.954-20-20-20-20 8.954-20 20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #0f766e 0%, #065f46 100%);
+        }
+        .screen {
+            display: none;
+        }
+        .screen.active {
+            display: block;
+        }
+        .tab-button {
+            transition: all 0.3s ease;
+        }
+        .tab-button.active {
+            background: linear-gradient(135deg, #0f766e 0%, #065f46 100%);
+            color: white;
+        }
+        .map-container {
+            background: linear-gradient(45deg, #e6fffa 0%, #f0fdfa 50%, #ecfdf5 100%);
+            border: 2px dashed #10b981;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-emerald-50 to-teal-50 islamic-pattern min-h-screen">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <div class="w-12 h-12 bg-yellow-400 rounded-full flex items-center justify-center">
+                        <svg class="w-8 h-8 text-emerald-800" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2L13.09 8.26L22 9L13.09 9.74L12 16L10.91 9.74L2 9L10.91 8.26L12 2Z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold arabic-title">نظام إدارة الحج المتكامل</h1>
+                        <p class="text-emerald-100 text-sm">الشاشات الفرعية للنظام</p>
+                    </div>
+                </div>
+                <button onclick="showScreen('dashboard')" class="bg-emerald-700 hover:bg-emerald-800 px-4 py-2 rounded-lg transition-colors">
+                    العودة للرئيسية
+                متابعة
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <div class="container mx-auto px-6 py-4">
+        <div class="bg-white rounded-lg shadow-md p-2 mb-6">
+            <div class="flex flex-wrap gap-2">
+                <button onclick="showScreen('dashboard')" class="tab-button px-4 py-2 rounded-lg text-sm font-medium active">الرئيسية</button>
+                <button onclick="showScreen('allocation')" class="tab-button px-4 py-2 rounded-lg text-sm font-medium">إدارة التخصيص</button>
+                <button onclick="showScreen('contractors')" class="tab-button px-4 py-2 rounded-lg text-sm font-medium">تأهيل المقاولين</button>
+                <button onclick="showScreen('licenses')" class="tab-button px-4 py-2 rounded-lg text-sm font-medium">التراخيص</button>
+                <button onclick="showScreen('operations')" class="tab-button px-4 py-2 rounded-lg text-sm font-medium">تشغيل المواقع</button>
+                <button onclick="showScreen('housing')" class="tab-button px-4 py-2 rounded-lg text-sm font-medium">الإسكان والإعاشة</button>
+                <button onclick="showScreen('reports-screen')" class="tab-button px-4 py-2 rounded-lg text-sm font-medium">البلاغات</button>
+                <button onclick="showScreen('documents')" class="tab-button px-4 py-2 rounded-lg text-sm font-medium">الوثائق</button>
+                <button onclick="showScreen('users')" class="tab-button px-4 py-2 rounded-lg text-sm font-medium">المستخدمين</button>
+                <button onclick="showScreen('analytics')" class="tab-button px-4 py-2 rounded-lg text-sm font-medium">التقارير</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Screen (Default) -->
+    <div id="dashboard" class="screen active">
+        <div class="container mx-auto px-6">
+            <div class="text-center py-12">
+                <div class="w-24 h-24 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-12 h-12 text-emerald-600" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2L13.09 8.26L22 9L13.09 9.74L12 16L10.91 9.74L2 9L10.91 8.26L12 2Z"/>
+                    </svg>
+                </div>
+                <h2 class="text-3xl font-bold text-gray-800 arabic-title mb-4">مرحباً بك في نظام إدارة الحج المتكامل</h2>
+                <p class="text-gray-600 mb-8">اختر من الأعلى الوحدة التي تريد الوصول إليها</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                    <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                        <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-emerald-600" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12,2C8.13,2 5,5.13 5,9C5,14.25 12,22 12,22S19,14.25 19,9C19,5.13 15.87,2 12,2Z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-800 mb-2">1,247</h3>
+                        <p class="text-gray-600 text-sm">إجمالي المواقع</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm4 18v-6h2.5l-2.54-7.63A1.5 1.5 0 0 0 18.54 8H16c-.8 0-1.54.37-2 1l-3 4v7h2v7h3v-7h4z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-800 mb-2">89</h3>
+                        <p class="text-gray-600 text-sm">المقاولين المؤهلين</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                        <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-yellow-600" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2Z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-800 mb-2">456</h3>
+                        <p class="text-gray-600 text-sm">التراخيص الصادرة</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Site Allocation Management Screen -->
+    <div id="allocation" class="screen">
+        <div class="container mx-auto px-6">
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+                <h2 class="text-2xl font-bold text-gray-800 arabic-title mb-6 flex items-center">
+                    <svg class="w-8 h-8 text-emerald-600 ml-3" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12,2C8.13,2 5,5.13 5,9C5,14.25 12,22 12,22S19,14.25 19,9C19,5.13 15.87,2 12,2Z"/>
+                    </svg>
+                    إدارة التخصيص والمواقع
+                </h2>
+                
+                <!-- Upload Ministry Allocation -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-emerald-50 rounded-lg p-6 border border-emerald-200">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">رفع تخصيص الوزارة</h3>
+                        <div class="map-container rounded-lg p-8 text-center mb-4">
+                            <svg class="w-16 h-16 text-emerald-600 mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                            </svg>
+                            <p class="text-gray-600 mb-4">اسحب وأفلت خريطة التخصيص هنا</p>
+                            <button class="bg-emerald-600 text-white px-6 py-2 rounded-lg hover:bg-emerald-700 transition-colors">
+                                اختيار ملف
+                            </button>
+                        </div>
+                        <div class="text-sm text-gray-600">
+                            <p>الملفات المدعومة: PDF, DWG, SHP</p>
+                            <p>الحد الأقصى: 50 ميجابايت</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-blue-50 rounded-lg p-6 border border-blue-200">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">طلبات البعثات</h3>
+                        <div class="space-y-3">
+                            <div class="bg-white rounded-lg p-4 border border-blue-200">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">بعثة إندونيسيا</h4>
+                                        <p class="text-sm text-gray-600">المنطقة المطلوبة: منى - القطاع أ</p>
+                                    </div>
+                                    <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">قيد المراجعة</span>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-lg p-4 border border-blue-200">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">بعثة ماليزيا</h4>
+                                        <p class="text-sm text-gray-600">المنطقة المطلوبة: منى - القطاع ب</p>
+                                    </div>
+                                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">موافق عليه</span>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-lg p-4 border border-blue-200">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">بعثة تركيا</h4>
+                                        <p class="text-sm text-gray-600">المنطقة المطلوبة: عرفات - القطاع ج</p>
+                                    </div>
+                                    <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm">مرفوض</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Site Analysis -->
+                <div class="bg-gray-50 rounded-lg p-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">تحليل الموقع وتوزيع البيانات</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-white rounded-lg p-4">
+                            <h4 class="font-medium text-gray-800 mb-2">البنية التحتية</h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span>المياه:</span>
+                                    <span class="text-green-600">متوفر</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>الكهرباء:</span>
+                                    <span class="text-green-600">متوفر</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>الصرف الصحي:</span>
+                                    <span class="text-yellow-600">جاري التركيب</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg p-4">
+                            <h4 class="font-medium text-gray-800 mb-2">المساحة والسعة</h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span>المساحة الإجمالية:</span>
+                                    <span>15,000 م²</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>السعة المتوقعة:</span>
+                                    <span>2,500 حاج</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>عدد الخيام:</span>
+                                    <span>125 خيمة</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg p-4">
+                            <h4 class="font-medium text-gray-800 mb-2">الخدمات</h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span>دورات المياه:</span>
+                                    <span>50 وحدة</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>المطابخ:</span>
+                                    <span>5 مطابخ</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>البوابات:</span>
+                                    <span>8 بوابات</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contractors Management Screen -->
+    <div id="contractors" class="screen">
+        <div class="container mx-auto px-6">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-gray-800 arabic-title mb-6 flex items-center">
+                    <svg class="w-8 h-8 text-blue-600 ml-3" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm4 18v-6h2.5l-2.54-7.63A1.5 1.5 0 0 0 18.54 8H16c-.8 0-1.54.37-2 1l-3 4v7h2v7h3v-7h4z"/>
+                    </svg>
+                    إدارة تأهيل المقاولين
+                </h2>
+
+                <!-- Contractor Classification -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-blue-50 rounded-lg p-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">التأهيل الفني والتصنيف</h3>
+                        <form class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">اسم المقاول</label>
+                                <input type="text" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="أدخل اسم المقاول">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">التصنيف</label>
+                                <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <option>الدرجة الأولى</option>
+                                    <option>الدرجة الثانية</option>
+                                    <option>الدرجة الثالثة</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">التخصص</label>
+                                <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <option>إنشاء الخيام</option>
+                                    <option>الكهرباء والإنارة</option>
+                                    <option>السباكة والصرف</option>
+                                    <option>التكييف والتهوية</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors">
+                                حفظ التأهيل
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="bg-green-50 rounded-lg p-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">المقاولين المؤهلين</h3>
+                        <div class="space-y-3 max-h-96 overflow-y-auto">
+                            <div class="bg-white rounded-lg p-4 border border-green-200">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">شركة البناء المتقدم</h4>
+                                        <p class="text-sm text-gray-600">التصنيف: الدرجة الأولى - إنشاء الخيام</p>
+                                        <p class="text-sm text-gray-600">تاريخ التأهيل: 2024/01/15</p>
+                                    </div>
+                                    <div class="text-left">
+                                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">مؤهل</span>
+                                        <div class="mt-2">
+                                            <span class="text-yellow-500">★★★★★</span>
+                                            <span class="text-sm text-gray-600">(4.8)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-lg p-4 border border-green-200">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">مؤسسة الكهرباء الحديثة</h4>
+                                        <p class="text-sm text-gray-600">التصنيف: الدرجة الثانية - الكهرباء والإنارة</p>
+                                        <p class="text-sm text-gray-600">تاريخ التأهيل: 2024/01/20</p>
+                                    </div>
+                                    <div class="text-left">
+                                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">مؤهل</span>
+                                        <div class="mt-2">
+                                            <span class="text-yellow-500">★★★★☆</span>
+                                            <span class="text-sm text-gray-600">(4.2)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bid Analysis -->
+                <div class="bg-gray-50 rounded-lg p-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">تحليل العروض المالية والفنية</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full bg-white rounded-lg overflow-hidden">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="px-6 py-3 text-right text-sm font-medium text-gray-700">المقاول</th>
+                                    <th class="px-6 py-3 text-right text-sm font-medium text-gray-700">العرض المالي</th>
+                                    <th class="px-6 py-3 text-right text-sm font-medium text-gray-700">التقييم الفني</th>
+                                    <th class="px-6 py-3 text-right text-sm font-medium text-gray-700">مدة التنفيذ</th>
+                                    <th class="px-6 py-3 text-right text-sm font-medium text-gray-700">الحالة</th>
+                                    <th class="px-6 py-3 text-right text-sm font-medium text-gray-700">الإجراء</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-6 py-4 text-sm text-gray-900">شركة البناء المتقدم</td>
+                                    <td class="px-6 py-4 text-sm text-gray-900">2,500,000 ريال</td>
+                                    <td class="px-6 py-4 text-sm">
+                                        <span class="text-yellow-500">★★★★★</span>
+                                        <span class="text-gray-600">(95%)</span>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-900">30 يوم</td>
+                                    <td class="px-6 py-4">
+                                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">مقبول</span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <button class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition-colors">
+                                            تسليم الموقع
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 text-sm text-gray-900">مؤسسة الإنشاءات السريعة</td>
+                                    <td class="px-6 py-4 text-sm text-gray-900">2,200,000 ريال</td>
+                                    <td class="px-6 py-4 text-sm">
+                                        <span class="text-yellow-500">★★★☆☆</span>
+                                        <span class="text-gray-600">(78%)</span>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-900">45 يوم</td>
+                                    <td class="px-6 py-4">
+                                        <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">قيد المراجعة</span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <button class="bg-gray-400 text-white px-4 py-2 rounded-lg text-sm cursor-not-allowed">
+                                            في الانتظار
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Licenses Screen -->
+    <div id="licenses" class="screen">
+        <div class="container mx-auto px-6">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-gray-800 arabic-title mb-6 flex items-center">
+                    <svg class="w-8 h-8 text-yellow-600 ml-3" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2Z"/>
+                    </svg>
+                    إصدار التراخيص والشهادات
+                </h2>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- License Application Form -->
+                    <div class="bg-yellow-50 rounded-lg p-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">طلب رخصة جديدة</h3>
+                        <form class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">نوع الرخصة</label>
+                                <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500">
+                                    <option>رخصة إضافة</option>
+                                    <option>شهادة مطابقة</option>
+                                    <option>رخصة جاهزية</option>
+                                    <option>شهادة سلامة التمديدات</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">رقم الموقع</label>
+                                <input type="text" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500" placeholder="أدخل رقم الموقع">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">اسم المقاول</label>
+                                <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500">
+                                    <option>شركة البناء المتقدم</option>
+                                    <option>مؤسسة الكهرباء الحديثة</option>
+                                    <option>شركة السباكة المتخصصة</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">المخططات والوثائق</label>
+                                <div class="border-2 border-dashed border-yellow-300 rounded-lg p-6 text-center">
+                                    <svg class="w-12 h-12 text-yellow-500 mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                                    </svg>
+                                    <p class="text-gray-600 mb-2">اسحب وأفلت الملفات هنا</p>
+                                    <button type="button" class="bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700 transition-colors">
+                                        اختيار ملفات
+                                    </button>
+                                </div>
+                            </div>
+                            <button type="submit" class="w-full bg-yellow-600 text-white py-3 px-4 rounded-lg hover:bg-yellow-700 transition-colors">
+                                تقديم الطلب
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- License Status -->
+                    <div class="bg-green-50 rounded-lg p-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">حالة التراخيص</h3>
+                        <div class="space-y-4 max-h-96 overflow-y-auto">
+                            <div class="bg-white rounded-lg p-4 border border-green-200">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-medium text-gray-800">رخصة إضافة #2024001</h4>
+                                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">صادرة</span>
+                                </div>
+                                <p class="text-sm text-gray-600">الموقع: منى - القطاع أ - الموقع 125</p>
+                                <p class="text-sm text-gray-600">المقاول: شركة البناء المتقدم</p>
+                                <p class="text-sm text-gray-600">تاريخ الإصدار: 2024/02/15</p>
+                                <div class="mt-3 flex space-x-2 space-x-reverse">
+                                    <button class="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700 transition-colors">
+                                        تحميل
+                                    </button>
+                                    <button class="bg-gray-600 text-white px-3 py-1 rounded text-sm hover:bg-gray-700 transition-colors">
+                                        طباعة
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white rounded-lg p-4 border border-yellow-200">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-medium text-gray-800">شهادة مطابقة #2024002</h4>
+                                    <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">قيد المراجعة</span>
+                                </div>
+                                <p class="text-sm text-gray-600">الموقع: عرفات - القطاع ب - الموقع 89</p>
+                                <p class="text-sm text-gray-600">المقاول: مؤسسة الكهرباء الحديثة</p>
+                                <p class="text-sm text-gray-600">تاريخ التقديم: 2024/02/20</p>
+                                <div class="mt-3">
+                                    <div class="bg-yellow-200 rounded-full h-2">
+                                        <div class="bg-yellow-600 h-2 rounded-full" style="width: 60%"></div>
+                                    </div>
+                                    <p class="text-xs text-gray-600 mt-1">60% مكتمل</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-white rounded-lg p-4 border border-red-200">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-medium text-gray-800">رخصة جاهزية #2024003</h4>
+                                    <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm">مرفوضة</span>
+                                </div>
+                                <p class="text-sm text-gray-600">الموقع: مزدلفة - القطاع ج - الموقع 67</p>
+                                <p class="text-sm text-gray-600">المقاول: شركة السباكة المتخصصة</p>
+                                <p class="text-sm text-gray-600">سبب الرفض: عدم مطابقة المواصفات الفنية</p>
+                                <div class="mt-3">
+                                    <button class="bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700 transition-colors">
+                                        إعادة تقديم
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Operations Screen -->
+    <div id="operations" class="screen">
+        <div class="container mx-auto px-6">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-gray-800 arabic-title mb-6 flex items-center">
+                    <svg class="w-8 h-8 text-purple-600 ml-3" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8Z"/>
+                    </svg>
+                    تشغيل ومتابعة المواقع
+                </h2>
+
+                <!-- Site Readiness Dashboard -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-green-50 rounded-lg p-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">المواقع الجاهزة</h3>
+                        <div class="text-center">
+                            <div class="text-4xl font-bold text-green-600 mb-2">847</div>
+                            <p class="text-gray-600">من أصل 1,247 موقع</p>
+                            <div class="mt-4">
+                                <div class="bg-green-200 rounded-full h-3">
+                                    <div class="bg-green-600 h-3 rounded-full" style="width: 68%"></div>
+                                </div>
+                                <p class="text-sm text-gray-600 mt-1">68% مكتمل</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-yellow-50 rounded-lg p-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">قيد التشغيل</h3>
+                        <div class="text-center">
+                            <div class="text-4xl font-bold text-yellow-600 mb-2">289</div>
+                            <p class="text-gray-600">موقع قيد التشغيل</p>
+                            <div class="mt-4">
+                                <div class="bg-yellow-200 rounded-full h-3">
+                                    <div class="bg-yellow-600 h-3 rounded-full" style="width: 23%"></div>
+                                </div>
+                                <p class="text-sm text-gray-600 mt-1">23% قيد العمل</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-red-50 rounded-lg p-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">تحتاج متابعة</h3>
+                        <div class="text-center">
+                            <div class="text-4xl font-bold text-red-600 mb-2">111</div>
+                            <p class="text-gray-600">موقع يحتاج متابعة</p>
+                            <div class="mt-4">
+                                <div class="bg-red-200 rounded-full h-3">
+                                    <div class="bg-red-600 h-3 rounded-full" style="width: 9%"></div>
+                                </div>
+                                <p class="text-sm text-gray-600 mt-1">9% تحتاج عمل</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Site Operations Table -->
+                <div class="bg-gray-50 rounded-lg p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-bold text-gray-800">متابعة تشغيل المواقع</h3>
+                        <div class="flex space-x-2 space-x-reverse">
+                            <select class="p-2 border border-gray-300 rounded-lg text-sm">
+                                <option>جميع المناطق</option>
+                                <option>منى</option>
+                                <option>عرفات</option>
+                                <option>مزدلفة</option>
+                            </select>
+                            <select class="p-2 border border-gray-300 rounded-lg text-sm">
+                                <option>جميع الحالات</option>
+                                <option>جاهز</option>
+                                <option>قيد التشغيل</option>
+                                <option>يحتاج متابعة</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full bg-white rounded-lg overflow-hidden">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="px-6 py-3 text-right text-sm font-medium text-gray-700">رقم الموقع</th>
+                                    <th class="px-6 py-3 text-right text-sm font-medium text-gray-700">المنطقة</th>
+                                    <th class="px-6 py-3 text-right text-sm font-medium text-gray-700">المقاول</th>
+                                    <th class="px-6 py-3 text-right text-sm font-medium text-gray-700">نسبة الإنجاز</th>
+                                    <th class="px-6 py-3 text-right text-sm font-medium text-gray-700">الحالة</th>
+                                    <th class="px-6 py-3 text-right text-sm font-medium text-gray-700">التقييم</th>
+                                    <th class="px-6 py-3 text-right text-sm font-medium text-gray-700">الإجراء</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-6 py-4 text-sm font-medium text-gray-900">#125</td>
+                                    <td class="px-6 py-4 text-sm text-gray-900">منى - القطاع أ</td>
+                                    <td class="px-6 py-4 text-sm text-gray-900">شركة البناء المتقدم</td>
+                                    <td class="px-6 py-4 text-sm">
+                                        <div class="bg-green-200 rounded-full h-2">
+                                            <div class="bg-green-600 h-2 rounded-full" style="width: 100%"></div>
+                                        </div>
+                                        <span class="text-xs text-gray-600">100%</span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">جاهز</span>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm">
+                                        <span class="text-yellow-500">★★★★★</span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <button class="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700 transition-colors">
+                                            تسليم
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 text-sm font-medium text-gray-900">#89</td>
+                                    <td class="px-6 py-4 text-sm text-gray-900">عرفات - القطاع ب</td>
+                                    <td class="px-6 py-4 text-sm text-gray-900">مؤسسة الكهرباء الحديثة</td>
+                                    <td class="px-6 py-4 text-sm">
+                                        <div class="bg-yellow-200 rounded-full h-2">
+                                            <div class="bg-yellow-600 h-2 rounded-full" style="width: 75%"></div>
+                                        </div>
+                                        <span class="text-xs text-gray-600">75%</span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">قيد التشغيل</span>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm">
+                                        <span class="text-yellow-500">★★★★☆</span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <button class="bg-purple-600 text-white px-3 py-1 rounded text-sm hover:bg-purple-700 transition-colors">
+                                            متابعة
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 text-sm font-medium text-gray-900">#67</td>
+                                    <td class="px-6 py-4 text-sm text-gray-900">مزدلفة - القطاع ج</td>
+                                    <td class="px-6 py-4 text-sm text-gray-900">شركة السباكة المتخصصة</td>
+                                    <td class="px-6 py-4 text-sm">
+                                        <div class="bg-red-200 rounded-full h-2">
+                                            <div class="bg-red-600 h-2 rounded-full" style="width: 45%"></div>
+                                        </div>
+                                        <span class="text-xs text-gray-600">45%</span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm">يحتاج متابعة</span>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm">
+                                        <span class="text-yellow-500">★★☆☆☆</span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <button class="bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700 transition-colors">
+                                            تدخل فوري
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Housing & Catering Screen -->
+    <div id="housing" class="screen">
+        <div class="container mx-auto px-6">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-gray-800 arabic-title mb-6 flex items-center">
+                    <svg class="w-8 h-8 text-indigo-600 ml-3" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z"/>
+                    </svg>
+                    إدارة الإسكان والإعاشة والفرضيات
+                </h2>
+
+                <!-- Utilities Management -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-blue-50 rounded-lg p-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">متابعة فرضيات المياه والكهرباء</h3>
+                        <div class="space-y-4">
+                            <div class="bg-white rounded-lg p-4 border border-blue-200">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-medium text-gray-800">محطة المياه الرئيسية - منى</h4>
+                                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">تعمل بكفاءة</span>
+                                </div>
+                                <div class="grid grid-cols-2 gap-4 text-sm">
+                                    <div>
+                                        <span class="text-gray-600">الضغط:</span>
+                                        <span class="font-medium text-green-600">4.2 بار</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-gray-600">التدفق:</span>
+                                        <span class="font-medium text-green-600">850 ل/دقيقة</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-gray-600">الجودة:</span>
+                                        <span class="font-medium text-green-600">ممتازة</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-gray-600">آخر فحص:</span>
+                                        <span class="font-medium">2024/02/25</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white rounded-lg p-4 border border-blue-200">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-medium text-gray-800">محطة الكهرباء - عرفات</h4>
+                                    <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">تحتاج صيانة</span>
+                                </div>
+                                <div class="grid grid-cols-2 gap-4 text-sm">
+                                    <div>
+                                        <span class="text-gray-600">الجهد:</span>
+                                        <span class="font-medium text-yellow-600">380 فولت</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-gray-600">الحمولة:</span>
+                                        <span class="font-medium text-yellow-600">85%</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-gray-600">الحالة:</span>
+                                        <span class="font-medium text-yellow-600">مستقرة</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-gray-600">آخر صيانة:</span>
+                                        <span class="font-medium">2024/02/20</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-green-50 rounded-lg p-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">إدارة الإعاشة</h3>
+                        <div class="space-y-4">
+                            <div class="bg-white rounded-lg p-4 border border-green-200">
+                                <h4 class="font-medium text-gray-800 mb-3">الوجبات اليومية</h4>
+                                <div class="grid grid-cols-3 gap-4 text-center">
+                                    <div>
+                                        <div class="text-2xl font-bold text-green-600">45,000</div>
+                                        <p class="text-sm text-gray-600">إفطار</p>
+                                    </div>
+                                    <div>
+                                        <div class="text-2xl font-bold text-green-600">52,000</div>
+                                        <p class="text-sm text-gray-600">غداء</p>
+                                    </div>
+                                    <div>
+                                        <div class="text-2xl font-bold text-green-600">48,000</div>
+                                        <p class="text-sm text-gray-600">عشاء</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white rounded-lg p-4 border border-green-200">
+                                <h4 class="font-medium text-gray-800 mb-3">المطابخ المركزية</h4>
+                                <div class="space-y-2">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-sm">مطبخ منى الرئيسي</span>
+                                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">نشط</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-sm">مطبخ عرفات المركزي</span>
+                                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">نشط</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-sm">مطبخ مزدلفة</span>
+                                        <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">صيانة</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Housing Management -->
+                <div class="bg-purple-50 rounded-lg p-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">متابعة الإسكان في مكة</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-white rounded-lg p-4">
+                            <h4 class="font-medium text-gray-800 mb-3">إحصائيات الإسكان</h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span>إجمالي الغرف:</span>
+                                    <span class="font-medium">15,420</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>المشغولة:</span>
+                                    <span class="font-medium text-green-600">12,890</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>المتاحة:</span>
+                                    <span class="font-medium text-blue-600">2,530</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>نسبة الإشغال:</span>
+                                    <span class="font-medium text-purple-600">83.6%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-lg p-4">
+                            <h4 class="font-medium text-gray-800 mb-3">الفنادق والمساكن</h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between items-center">
+                                    <span>فندق الحرمين</span>
+                                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">95%</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span>أبراج البيت</span>
+                                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">88%</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span>فندق الصفوة</span>
+                                    <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">72%</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span>مساكن الضيافة</span>
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">65%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-lg p-4">
+                            <h4 class="font-medium text-gray-800 mb-3">الخدمات المساندة</h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between items-center">
+                                    <span>النظافة</span>
+                                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">ممتاز</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span>الأمن</span>
+                                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">ممتاز</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span>الصيانة</span>
+                                    <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">جيد</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span>النقل</span>
+                                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">ممتاز</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reports Screen -->
+    <div id="reports-screen" class="screen">
+        <div class="container mx-auto px-6">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-gray-800 arabic-title mb-6 flex items-center">
+                    <svg class="w-8 h-8 text-red-600 ml-3" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M13,14H11V10H13M13,18H11V16H13M1,21H23L12,2L1,21Z"/>
+                    </svg>
+                    التبليغ والملاحظات الميدانية
+                </h2>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Report Form -->
+                    <div class="bg-red-50 rounded-lg p-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">إرسال بلاغ جديد</h3>
+                        <form class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">نوع البلاغ</label>
+                                <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500">
+                                    <option>ملاحظة ميدانية</option>
+                                    <option>شكوى</option>
+                                    <option>حادث</option>
+                                    <option>وفاة</option>
+                                    <option>عطل فني</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">الموقع</label>
+                                <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500">
+                                    <option>منى - القطاع أ</option>
+                                    <option>عرفات - القطاع ب</option>
+                                    <option>مزدلفة - القطاع ج</option>
+                                    <option>الحرم المكي</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">الأولوية</label>
+                                <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500">
+                                    <option>عادية</option>
+                                    <option>متوسطة</option>
+                                    <option>عالية</option>
+                                    <option>طارئة</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">وصف البلاغ</label>
+                                <textarea rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500" placeholder="اكتب تفاصيل البلاغ هنا..."></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">المرفقات</label>
+                                <div class="border-2 border-dashed border-red-300 rounded-lg p-4 text-center">
+                                    <svg class="w-8 h-8 text-red-500 mx-auto mb-2" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                                    </svg>
+                                    <p class="text-sm text-gray-600">إرفاق صور أو مستندات</p>
+                                </div>
+                            </div>
+                            <button type="submit" class="w-full bg-red-600 text-white py-3 px-4 rounded-lg hover:bg-red-700 transition-colors">
+                                إرسال البلاغ
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Reports List -->
+                    <div class="bg-gray-50 rounded-lg p-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">البلاغات الأخيرة</h3>
+                        <div class="space-y-4 max-h-96 overflow-y-auto">
+                            <div class="bg-white rounded-lg p-4 border-r-4 border-red-500">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-medium text-gray-800">عطل في نظام المياه</h4>
+                                    <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm">طارئ</span>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-2">الموقع: منى - القطاع أ - الموقع 125</p>
+                                <p class="text-sm text-gray-600 mb-2">انقطاع في إمداد المياه للخيام 50-75</p>
+                                <div class="flex items-center justify-between text-xs text-gray-500">
+                                    <span>منذ 15 دقيقة</span>
+                                    <span>البلاغ #2024001</span>
+                                </div>
+                                <div class="mt-3 flex space-x-2 space-x-reverse">
+                                    <button class="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700 transition-colors">
+                                        متابعة
+                                    </button>
+                                    <button class="bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700 transition-colors">
+                                        حل
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="bg-white rounded-lg p-4 border-r-4 border-yellow-500">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-medium text-gray-800">ملاحظة على النظافة</h4>
+                                    <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">متوسط</span>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-2">الموقع: عرفات - القطاع ب - الموقع 89</p>
+                                <p class="text-sm text-gray-600 mb-2">تراكم النفايات في المنطقة الشرقية</p>
+                                <div class="flex items-center justify-between text-xs text-gray-500">
+                                    <span>منذ ساعة</span>
+                                    <span>البلاغ #2024002</span>
+                                </div>
+                                <div class="mt-3">
+                                    <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">قيد المعالجة</span>
+                                </div>
+                            </div>
+
+                            <div class="bg-white rounded-lg p-4 border-r-4 border-green-500">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-medium text-gray-800">تحسين في الخدمة</h4>
+                                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">عادي</span>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-2">الموقع: مزدلفة - القطاع ج - الموقع 67</p>
+                                <p class="text-sm text-gray-600 mb-2">اقتراح لتحسين توزيع الوجبات</p>
+                                <div class="flex items-center justify-between text-xs text-gray-500">
+                                    <span>منذ 3 ساعات</span>
+                                    <span>البلاغ #2024003</span>
+                                </div>
+                                <div class="mt-3">
+                                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">تم الحل</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reports Map -->
+                <div class="mt-8 bg-gray-50 rounded-lg p-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">خريطة البلاغات</h3>
+                    <div class="bg-white rounded-lg p-8 text-center border-2 border-dashed border-gray-300">
+                        <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12,2C8.13,2 5,5.13 5,9C5,14.25 12,22 12,22S19,14.25 19,9C19,5.13 15.87,2 12,2M12,6.5C13.38,6.5 14.5,7.62 14.5,9S13.38,11.5 12,11.5S9.5,10.38 9.5,9S10.62,6.5 12,6.5Z"/>
+                        </svg>
+                        <p class="text-gray-600 mb-4">خريطة تفاعلية لعرض مواقع البلاغات</p>
+                        <p class="text-sm text-gray-500">سيتم تحميل الخريطة مع نظام GIS</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Documents Screen -->
+    <div id="documents" class="screen">
+        <div class="container mx-auto px-6">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-gray-800 arabic-title mb-6 flex items-center">
+                    <svg class="w-8 h-8 text-teal-600 ml-3" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6,2A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2H6Z"/>
+                    </svg>
+                    إدارة الوثائق والمراسلات
+                </h2>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Document Upload -->
+                    <div class="bg-teal-50 rounded-lg p-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">رفع وثيقة جديدة</h3>
+                        <form class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">نوع الوثيقة</label>
+                                <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500">
+                                    <option>مراسلة رسمية</option>
+                                    <option>تقرير فني</option>
+                                    <option>شهادة</option>
+                                    <option>مخطط</option>
+                                    <option>عقد</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">العنوان</label>
+                                <input type="text" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500" placeholder="عنوان الوثيقة">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">الوصف</label>
+                                <textarea rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500" placeholder="وصف مختصر للوثيقة"></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">الملف</label>
+                                <div class="border-2 border-dashed border-teal-300 rounded-lg p-4 text-center">
+                                    <svg class="w-8 h-8 text-teal-500 mx-auto mb-2" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                                    </svg>
+                                    <p class="text-sm text-gray-600">اختر ملف أو اسحبه هنا</p>
+                                </div>
+                            </div>
+                            <button type="submit" class="w-full bg-teal-600 text-white py-3 px-4 rounded-lg hover:bg-teal-700 transition-colors">
+                                رفع الوثيقة
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Document List -->
+                    <div class="bg-gray-50 rounded-lg p-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">الوثائق الأخيرة</h3>
+                        <div class="space-y-3 max-h-96 overflow-y-auto">
+                            <div class="bg-white rounded-lg p-3 border border-gray-200">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <svg class="w-6 h-6 text-red-500 ml-2" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                                        </svg>
+                                        <div>
+                                            <h4 class="text-sm font-medium text-gray-800">تقرير التقييم الشهري</h4>
+                                            <p class="text-xs text-gray-600">PDF • 2.5 MB</p>
+                                        </div>
+                                    </div>
+                                    <button class="text-blue-600 hover:text-blue-800 text-sm">تحميل</button>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white rounded-lg p-3 border border-gray-200">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <svg class="w-6 h-6 text-blue-500 ml-2" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                                        </svg>
+                                        <div>
+                                            <h4 class="text-sm font-medium text-gray-800">مخطط الموقع 125</h4>
+                                            <p class="text-xs text-gray-600">DWG • 15.2 MB</p>
+                                        </div>
+                                    </div>
+                                    <button class="text-blue-600 hover:text-blue-800 text-sm">تحميل</button>
+                                </div>
+                            </div>
+
+                            <div class="bg-white rounded-lg p-3 border border-gray-200">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <svg class="w-6 h-6 text-green-500 ml-2" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                                        </svg>
+                                        <div>
+                                            <h4 class="text-sm font-medium text-gray-800">شهادة المطابقة</h4>
+                                            <p class="text-xs text-gray-600">PDF • 1.1 MB</p>
+                                        </div>
+                                    </div>
+                                    <button class="text-blue-600 hover:text-blue-800 text-sm">تحميل</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notifications -->
+                    <div class="bg-blue-50 rounded-lg p-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">الإشعارات والتنبيهات</h3>
+                        <div class="space-y-4">
+                            <div class="bg-white rounded-lg p-4 border border-blue-200">
+                                <h4 class="font-medium text-gray-800 mb-2">إعدادات الإشعارات</h4>
+                                <div class="space-y-3">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" checked class="ml-2 text-blue-600">
+                                        <span class="text-sm">إشعارات SMS</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" checked class="ml-2 text-blue-600">
+                                        <span class="text-sm">إشعارات WhatsApp</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" checked class="ml-2 text-blue-600">
+                                        <span class="text-sm">إشعارات البريد الإلكتروني</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="bg-white rounded-lg p-4 border border-blue-200">
+                                <h4 class="font-medium text-gray-800 mb-2">الإشعارات الأخيرة</h4>
+                                <div class="space-y-2 text-sm">
+                                    <div class="flex items-center justify-between">
+                                        <span>تم رفع وثيقة جديدة</span>
+                                        <span class="text-xs text-gray-500">منذ 5 دقائق</span>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <span>مراسلة جديدة من الوزارة</span>
+                                        <span class="text-xs text-gray-500">منذ ساعة</span>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <span>تحديث في النظام</span>
+                                        <span class="text-xs text-gray-500">منذ 3 ساعات</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Users Management Screen -->
+    <div id="users" class="screen">
+        <div class="container mx-auto px-6">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-gray-800 arabic-title mb-6 flex items-center">
+                    <svg class="w-8 h-8 text-gray-600 ml-3" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M16,4C16.88,4 17.67,4.38 18.18,5L20.5,2.69L21.81,4L19.5,6.31C19.81,6.81 20,7.39 20,8A4,4 0 0,1 16,12A4,4 0 0,1 12,8A4,4 0 0,1 16,4M16,5.5A2.5,2.5 0 0,0 13.5,8A2.5,2.5 0 0,0 16,10.5A2.5,2.5 0 0,0 18.5,8A2.5,2.5 0 0,0 16,5.5M16,13C18.67,13 21.33,14.33 22,16V18H10V16C10.67,14.33 13.33,13 16,13M16,14.5C14.25,14.5 11.5,15.42 11.5,16V16.5H20.5V16C20.5,15.42 17.75,14.5 16,14.5M8,6A4,4 0 0,1 12,10A4,4 0 0,1 8,14A4,4 0 0,1 4,10A4,4 0 0,1 8,6M8,7.5A2.5,2.5 0 0,0 5.5,10A2.5,2.5 0 0,0 8,12.5A2.5,2.5 0 0,0 10.5,10A2.5,2.5 0 0,0 8,7.5M8,15C10.67,15 13.33,16.33 14,18V20H2V18C2.67,16.33 5.33,15 8,15M8,16.5C6.25,16.5 3.5,17.42 3.5,18V18.5H12.5V18C12.5,17.42 9.75,16.5 8,16.5Z"/>
+                    </svg>
+                    إدارة الحسابات والمستخدمين والصلاحيات
+                </h2>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Add New User -->
+                    <div class="bg-gray-50 rounded-lg p-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">إضافة مستخدم جديد</h3>
+                        <form class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">الاسم الكامل</label>
+                                <input type="text" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-gray-500" placeholder="أدخل الاسم الكامل">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">البريد الإلكتروني</label>
+                                <input type="email" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-gray-500" placeholder="example@domain.com">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">نوع المستخدم</label>
+                                <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-gray-500">
+                                    <option>مدير شركة</option>
+                                    <option>مستخدم ثانوي</option>
+                                    <option>مستخدم ميداني</option>
+                                    <option>مراقب</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">الصلاحيات</label>
+                                <div class="space-y-2">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="ml-2 text-gray-600">
+                                        <span class="text-sm">عرض البيانات</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="ml-2 text-gray-600">
+                                        <span class="text-sm">تعديل البيانات</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="ml-2 text-gray-600">
+                                        <span class="text-sm">إدارة المرفقات</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="ml-2 text-gray-600">
+                                        <span class="text-sm">إصدار التقارير</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <button type="submit" class="w-full bg-gray-600 text-white py-3 px-4 rounded-lg hover:bg-gray-700 transition-colors">
+                                إضافة المستخدم
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Users List -->
+                    <div class="bg-blue-50 rounded-lg p-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">المستخدمين الحاليين</h3>
+                        <div class="space-y-3 max-h-96 overflow-y-auto">
+                            <div class="bg-white rounded-lg p-4 border border-blue-200">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center ml-3">
+                                            <span class="text-blue-600 font-medium">أح</span>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-gray-800">أحمد محمد السعيد</h4>
+                                            <p class="text-sm text-gray-600">مدير شركة • ahmed@company.com</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-left">
+                                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">نشط</span>
+                                        <div class="mt-1">
+                                            <button class="text-blue-600 hover:text-blue-800 text-xs">تعديل</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white rounded-lg p-4 border border-blue-200">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center ml-3">
+                                            <span class="text-green-600 font-medium">فا</span>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-gray-800">فاطمة علي الزهراني</h4>
+                                            <p class="text-sm text-gray-600">مستخدم ثانوي • fatima@company.com</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-left">
+                                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">نشط</span>
+                                        <div class="mt-1">
+                                            <button class="text-blue-600 hover:text-blue-800 text-xs">تعديل</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white rounded-lg p-4 border border-blue-200">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center ml-3">
+                                            <span class="text-yellow-600 font-medium">خا</span>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-gray-800">خالد عبدالله القحطاني</h4>
+                                            <p class="text-sm text-gray-600">مستخدم ميداني • khalid@company.com</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-left">
+                                        <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs">غير متصل</span>
+                                        <div class="mt-1">
+                                            <button class="text-blue-600 hover:text-blue-800 text-xs">تعديل</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Permissions Matrix -->
+                <div class="mt-8 bg-gray-50 rounded-lg p-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">مصفوفة الصلاحيات</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full bg-white rounded-lg overflow-hidden">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="px-6 py-3 text-right text-sm font-medium text-gray-700">الوحدة</th>
+                                    <th class="px-6 py-3 text-center text-sm font-medium text-gray-700">مدير شركة</th>
+                                    <th class="px-6 py-3 text-center text-sm font-medium text-gray-700">مستخدم ثانوي</th>
+                                    <th class="px-6 py-3 text-center text-sm font-medium text-gray-700">مستخدم ميداني</th>
+                                    <th class="px-6 py-3 text-center text-sm font-medium text-gray-700">مراقب</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-6 py-4 text-sm text-gray-900">إدارة التخصيص</td>
+                                    <td class="px-6 py-4 text-center">
+                                        <span class="text-green-600">✓</span>
+                                    </td>
+                                    <td class="px-6 py-4 text-center">
+                                        <span class="text-yellow-600">○</span>
+                                    </td>
+                                    <td class="px-6 py-4 text-center">
+                                        <span class="text-red-600">✗</span>
+                                    </td>
+                                    <td class="px-6 py-4 text-center">
+                                        <span class="text-yellow-600">○</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 text-sm text-gray-900">تأهيل المقاولين</td>
+                                    <td class="px-6 py-4 text-center">
+                                        <span class="text-green-600">✓</span>
+                                    </td>
+                                    <td class="px-6 py-4 text-center">
+                                        <span class="text-yellow-600">○</span>
+                                    </td>
+                                    <td class="px-6 py-4 text-center">
+                                        <span class="text-red-600">✗</span>
+                                    </td>
+                                    <td class="px-6 py-4 text-center">
+                                        <span class="text-yellow-600">○</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 text-sm text-gray-900">البلاغات الميدانية</td>
+                                    <td class="px-6 py-4 text-center">
+                                        <span class="text-green-600">✓</span>
+                                    </td>
+                                    <td class="px-6 py-4 text-center">
+                                        <span class="text-green-600">✓</span>
+                                    </td>
+                                    <td class="px-6 py-4 text-center">
+                                        <span class="text-green-600">✓</span>
+                                    </td>
+                                    <td class="px-6 py-4 text-center">
+                                        <span class="text-yellow-600">○</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mt-4 text-sm text-gray-600">
+                        <p><span class="text-green-600">✓</span> صلاحية كاملة • <span class="text-yellow-600">○</span> عرض فقط • <span class="text-red-600">✗</span> لا يوجد صلاحية</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analytics Screen -->
+    <div id="analytics" class="screen">
+        <div class="container mx-auto px-6">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-gray-800 arabic-title mb-6 flex items-center">
+                    <svg class="w-8 h-8 text-green-600 ml-3" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M22,21H2V3H4V19H6V10H10V19H12V6H16V19H18V14H22V21Z"/>
+                    </svg>
+                    مؤشرات الأداء والتقارير
+                </h2>
+
+                <!-- KPI Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-emerald-50 rounded-lg p-6 border border-emerald-200">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-emerald-600 text-sm font-medium">معدل الإنجاز</p>
+                                <p class="text-3xl font-bold text-emerald-700">87.5%</p>
+                                <p class="text-emerald-600 text-sm">+5.2% من الشهر الماضي</p>
+                            </div>
+                            <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
+                                <svg class="w-6 h-6 text-emerald-600" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-blue-50 rounded-lg p-6 border border-blue-200">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-blue-600 text-sm font-medium">رضا المستفيدين</p>
+                                <p class="text-3xl font-bold text-blue-700">4.6/5</p>
+                                <p class="text-blue-600 text-sm">+0.3 من التقييم السابق</p>
+                            </div>
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                                <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.46,13.97L5.82,21L12,17.27Z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-yellow-50 rounded-lg p-6 border border-yellow-200">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-yellow-600 text-sm font-medium">الوقت المتوسط للحل</p>
+                                <p class="text-3xl font-bold text-yellow-700">2.4 ساعة</p>
+                                <p class="text-yellow-600 text-sm">-0.8 ساعة تحسن</p>
+                            </div>
+                            <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
+                                <svg class="w-6 h-6 text-yellow-600" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M16.2,16.2L11,13V7H12.5V12.2L17,14.9L16.2,16.2Z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-purple-50 rounded-lg p-6 border border-purple-200">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-purple-600 text-sm font-medium">التوفير في التكاليف</p>
+                                <p class="text-3xl font-bold text-purple-700">15.2%</p>
+                                <p class="text-purple-600 text-sm">مقارنة بالعام الماضي</p>
+                            </div>
+                            <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                                <svg class="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M7,15H9C9,16.08 10.37,17 12,17C13.63,17 15,16.08 15,15C15,13.9 13.96,13.5 11.76,12.97C9.64,12.44 7,11.78 7,9C7,7.21 8.47,5.69 10.5,5.18V3H13.5V5.18C15.53,5.69 17,7.21 17,9H15C15,7.92 13.63,7 12,7C10.37,7 9,7.92 9,9C9,10.1 10.04,10.5 12.24,11.03C14.36,11.56 17,12.22 17,15C17,16.79 15.53,18.31 13.5,18.82V21H10.5V18.82C8.47,18.31 7,16.79 7,15Z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-gray-50 rounded-lg p-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">تقدم الإنجاز الشهري</h3>
+                        <div class="bg-white rounded-lg p-6 text-center border-2 border-dashed border-gray-300">
+                            <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M22,21H2V3H4V19H6V10H10V19H12V6H16V19H18V14H22V21Z"/>
+                            </svg>
+                            <p class="text-gray-600 mb-2">رسم بياني لتقدم الإنجاز</p>
+                            <p class="text-sm text-gray-500">سيتم تحميل البيانات من قاعدة البيانات</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 rounded-lg p-6">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4">توزيع البلاغات حسب النوع</h3>
+                        <div class="bg-white rounded-lg p-6 text-center border-2 border-dashed border-gray-300">
+                            <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M11,2V22C5.9,21.5 2,17.2 2,12C2,6.8 5.9,2.5 11,2M13,2V11H22C22,6.8 18.1,2.5 13,2M13,13V22C18.1,21.5 22,17.2 22,12H13Z"/>
+                            </svg>
+                            <p class="text-gray-600 mb-2">رسم دائري لتوزيع البلاغات</p>
+                            <p class="text-sm text-gray-500">سيتم تحميل البيانات من قاعدة البيانات</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Export Options -->
+                <div class="bg-gray-50 rounded-lg p-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">تصدير التقارير</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-medium text-gray-800 mb-3">خيارات التصدير</h4>
+                            <div class="space-y-3">
+                                <label class="flex items-center">
+                                    <input type="checkbox" checked class="ml-2 text-green-600">
+                                    <span class="text-sm">ملف Excel (.xlsx)</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="ml-2 text-green-600">
+                                    <span class="text-sm">ملف PDF</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="ml-2 text-green-600">
+                                    <span class="text-sm">ملف CAD (.dwg)</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="ml-2 text-green-600">
+                                    <span class="text-sm">ملف Shapefile (.shp)</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="ml-2 text-green-600">
+                                    <span class="text-sm">ملف KMZ</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h4 class="font-medium text-gray-800 mb-3">فلاتر التقرير</h4>
+                            <div class="space-y-3">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">الفترة الزمنية</label>
+                                    <select class="w-full p-2 border border-gray-300 rounded-lg text-sm">
+                                        <option>الشهر الحالي</option>
+                                        <option>الشهر الماضي</option>
+                                        <option>آخر 3 أشهر</option>
+                                        <option>العام الحالي</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">المنطقة</label>
+                                    <select class="w-full p-2 border border-gray-300 rounded-lg text-sm">
+                                        <option>جميع المناطق</option>
+                                        <option>منى</option>
+                                        <option>عرفات</option>
+                                        <option>مزدلفة</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">الفئة</label>
+                                    <select class="w-full p-2 border border-gray-300 rounded-lg text-sm">
+                                        <option>جميع الفئات</option>
+                                        <option>المقاولين</option>
+                                        <option>المواقع</option>
+                                        <option>التراخيص</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 flex space-x-4 space-x-reverse">
+                        <button class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors">
+                            تصدير التقرير
+                        </button>
+                        <button class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                            معاينة التقرير
+                        </button>
+                        <button class="bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition-colors">
+                            طباعة
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showScreen(screenId) {
+            // Hide all screens
+            const screens = document.querySelectorAll('.screen');
+            screens.forEach(screen => {
+                screen.classList.remove('active');
+            });
+
+            // Show selected screen
+            document.getElementById(screenId).classList.add('active');
+
+            // Update tab buttons
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Find and activate the corresponding tab button
+            const activeButton = Array.from(tabButtons).find(button => 
+                button.onclick && button.onclick.toString().includes(screenId)
+            );
+            if (activeButton) {
+                activeButton.classList.add('active');
+            }
+        }
+
+        // Add interactive functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click handlers for all buttons
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(button => {
+                if (!button.onclick && !button.classList.contains('tab-button')) {
+                    button.addEventListener('click', function() {
+                        // Simulate loading for action buttons
+                        if (this.textContent.includes('تقديم') || 
+                            this.textContent.includes('حفظ') || 
+                            this.textContent.includes('إرسال') ||
+                            this.textContent.includes('تصدير')) {
+                            
+                            const originalText = this.textContent;
+                            this.innerHTML = '<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm3.59 16.59L11 13.17V7h2v5.59l3.59 3.58-1.41 1.42z"/></svg> جارٍ التحميل...';
+                            setTimeout(() => {
+                                this.textContent = originalText;
+                            }, 2000); // Simulate a 2-second loading time
+                        }
+                    });
+                }
+            });
+            });
+        // Show the first screen by default
+        showScreen('dashboard');
+    </script>
+</body>
+</html>
