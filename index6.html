@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام إدارة الحج المتقدم</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+        
+        * {
+            font-family: 'Cairo', sans-serif;
+        }
+        
+        .arabic-title {
+            font-weight: 900;
+            letter-spacing: -0.5px;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .gradient-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 100%);
+            backdrop-filter: blur(10px);
+        }
+        
+        .metric-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.8) 100%);
+            backdrop-filter: blur(5px);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(240, 147, 251, 0.4);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(79, 172, 254, 0.4);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-warning:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(250, 112, 154, 0.4);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.4);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .floating-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .progress-bar {
+            animation: progress 2s ease-in-out;
+        }
+        
+        @keyframes progress {
+            0% { width: 0%; }
+        }
+        
+        .screen {
+            display: none;
+        }
+        
+        .screen.active {
+            display: block;
+        }
+        
+        .nav-item {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .nav-item:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateX(-5px);
+        }
+        
+        .nav-item.active {
+            background: rgba(255,255,255,0.2);
+            border-right: 4px solid #fff;
+        }
+        
+        .input-focus {
+            transition: all 0.3s ease;
+        }
+        
+        .status-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .interactive-map {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border: 2px solid #2196f3;
+            border-radius: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-location {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            color: white;
+            font-weight: bold;
+            border: 2px solid white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .map-location:hover {
+            transform: scale(1.5);
+            z-index: 10;
+        }
+
+        .map-location.housing {
+            background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+        }
+
+        .map-location.catering {
+            background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+        }
+
+        .map-location.report {
+            background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+            animation: pulse 2s infinite;
+        }
+
+        .map-location.urgent {
+            background: linear-gradient(135deg, #e91e63 0%, #ad1457 100%);
+            animation: pulse 1.5s infinite;
+        }
+
+        .map-location.medium {
+            background: linear-gradient(135deg, #ffc107 0%, #f57c00 100%);
+        }
+
+        .map-location.normal {
+            background: linear-gradient(135deg, #2196f3 0%, #1565c0 100%);
+        }
+
+        .map-tooltip {
+            position: absolute;
+            background: rgba(0,0,0,0.9);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            white-space: nowrap;
+            z-index: 20;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            max-width: 300px;
+            white-space: normal;
+        }
+
+        .map-tooltip.show {
+            opacity: 1;
+        }
+
+        .map-legend {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(255,255,255,0.95);
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .legend-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .legend-color {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            margin-left: 10px;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .map-controls {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .map-control-btn {
+            background: rgba(255,255,255,0.9);
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .map-control-btn:hover {
+            background: white;
+            transform: translateY(-2px);
+        }
+
+        .map-control-btn.active {
+            background: #2196f3;
+            color: white;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #f44336;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body class="gradient-bg">
+    <script>
+        // Navigation functionality
+        function showScreen(screenId) {
+            // Hide all screens
+            const screens = document.querySelectorAll('.screen');
+            screens.forEach(screen => {
+                screen.classList.remove('active');
+            });
+            
+            // Show selected screen
+            const selectedScreen = document.getElementById(screenId);
+            if (selectedScreen) {
+                selectedScreen.classList.add('active');
+            }
+            
+            // Update navigation active state
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Find and activate the nav item that was clicked
+            const targetNavItem = document.querySelector(`[onclick="showScreen('${screenId}')"]`);
+            if (targetNavItem) {
+                targetNavItem.classList.add('active');
+            }
+        }
+
+        // License form submission
+        function handleLicenseFormSubmit(event) {
+            event.preventDefault();
+            alert('تم إرسال طلب الترخيص بنجاح! سيتم مراجعته خلال 24 ساعة.');
+        }
+
+        // Search licenses
+        function searchLicenses() {
+            alert('جاري البحث في قاعدة بيانات التراخيص...');
+        }
+
+        // Housing form submission
+        function handleHousingFormSubmit(event) {
+            event.preventDefault();
+            alert('تم حفظ بيانات الوحدة السكنية بنجاح!');
+        }
+
+        // Operations functions
+        function toggleOperationsLayer(layer) {
+            const buttons = document.querySelectorAll('.map-control-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            const locations = document.querySelectorAll('.map-location');
+            locations.forEach(loc => {
+                if (layer === 'all') {
+                    loc.style.display = 'flex';
+                } else if (layer === 'active') {
+                    loc.style.display = loc.style.background.includes('#4caf50') ? 'flex' : 'none';
+                } else if (layer === 'maintenance') {
+                    loc.style.display = loc.style.background.includes('#ffc107') ? 'flex' : 'none';
+                } else if (layer === 'offline') {
+                    loc.style.display = loc.style.background.includes('#f44336') ? 'flex' : 'none';
+                }
+            });
+        }
+
+        function loadSiteDetails(siteId) {
+            const panel = document.getElementById('siteDetailsPanel');
+            const info = document.getElementById('siteInfo');
+            
+            if (siteId) {
+                panel.classList.remove('hidden');
+                
+                const siteData = {
+                    'A1': {
+                        name: 'منى أ-001 - إسكان',
+                        status: 'نشط',
+                        capacity: '50,000 حاج',
+                        occupancy: '92%',
+                        lastCheck: 'منذ 30 دقيقة'
+                    },
+                    'B2': {
+                        name: 'منى ب-002 - إعاشة',
+                        status: 'نشط',
+                        capacity: '100,000 وجبة/يوم',
+                        occupancy: '95%',
+                        lastCheck: 'منذ 15 دقيقة'
+                    },
+                    'G7': {
+                        name: 'عرفات ز-007 - مياه',
+                        status: 'خارج الخدمة',
+                        capacity: 'محطة رئيسية',
+                        occupancy: '0%',
+                        lastCheck: 'منذ 3 ساعات'
+                    }
+                };
+                
+                const site = siteData[siteId] || {
+                    name: 'موقع غير محدد',
+                    status: 'غير معروف',
+                    capacity: 'غير محدد',
+                    occupancy: 'غير محدد',
+                    lastCheck: 'غير محدد'
+                };
+                
+                info.innerHTML = `
+                    <div class="flex justify-between"><span class="font-bold">الاسم:</span><span>${site.name}</span></div>
+                    <div class="flex justify-between"><span class="font-bold">الحالة:</span><span>${site.status}</span></div>
+                    <div class="flex justify-between"><span class="font-bold">السعة:</span><span>${site.capacity}</span></div>
+                    <div class="flex justify-between"><span class="font-bold">الإشغال:</span><span>${site.occupancy}</span></div>
+                    <div class="flex justify-between"><span class="font-bold">آخر فحص:</span><span>${site.lastCheck}</span></div>
+                `;
+            } else {
+                panel.classList.add('hidden');
+            }
+        }
+
+        function activateSite() {
+            alert('تم تشغيل الموقع بنجاح!');
+        }
+
+        function scheduleMaintenance() {
+            alert('تم جدولة الصيانة للموقع!');
+        }
+
+        function shutdownSite() {
+            if (confirm('هل أنت متأكد من إيقاف هذا الموقع؟')) {
+                alert('تم إيقاف الموقع!');
+            }
+        }
+
+        function generateSiteReport() {
+            alert('جاري إنشاء تقرير الموقع...');
+        }
+
+        // Housing and catering map functions
+        function toggleMapLayer(layer) {
+            const buttons = document.querySelectorAll('.map-control-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            const housingLocations = document.querySelectorAll('.map-location.housing');
+            const cateringLocations = document.querySelectorAll('.map-location.catering');
+            
+            if (layer === 'all') {
+                housingLocations.forEach(loc => loc.style.display = 'flex');
+                cateringLocations.forEach(loc => loc.style.display = 'flex');
+            } else if (layer === 'housing') {
+                housingLocations.forEach(loc => loc.style.display = 'flex');
+                cateringLocations.forEach(loc => loc.style.display = 'none');
+            } else if (layer === 'catering') {
+                housingLocations.forEach(loc => loc.style.display = 'none');
+                cateringLocations.forEach(loc => loc.style.display = 'flex');
+            }
+        }
+
+        // Map tooltip functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const mapLocations = document.querySelectorAll('.map-location');
+            const tooltips = document.querySelectorAll('.map-tooltip');
+            
+            mapLocations.forEach(location => {
+                location.addEventListener('mouseenter', function(e) {
+                    const tooltip = this.parentElement.querySelector('.map-tooltip');
+                    if (tooltip && this.dataset.tooltip) {
+                        tooltip.innerHTML = this.dataset.tooltip;
+                        tooltip.style.left = (e.pageX + 10) + 'px';
+                        tooltip.style.top = (e.pageY - 10) + 'px';
+                        tooltip.classList.add('show');
+                    }
+                });
+                
+                location.addEventListener('mouseleave', function() {
+                    const tooltip = this.parentElement.querySelector('.map-tooltip');
+                    if (tooltip) {
+                        tooltip.classList.remove('show');
+                    }
+                });
+                
+                location.addEventListener('mousemove', function(e) {
+                    const tooltip = this.parentElement.querySelector('.map-tooltip');
+                    if (tooltip && tooltip.classList.contains('show')) {
+                        tooltip.style.left = (e.pageX + 10) + 'px';
+                        tooltip.style.top = (e.pageY - 10) + 'px';
+                    }
+                });
+            });
+        });
+    </script>
+    <!-- Navigation -->
+    <nav class="fixed right-0 top-0 h-full w-80 bg-gradient-to-b from-gray-900 to-gray-800 shadow-2xl z-50">
+        <div class="p-8">
+            <div class="text-center mb-12">
+                <div class="w-20 h-20 bg-gradient-to-br from-blue-400 to-purple-500 rounded-2xl flex items-center justify-center mx-auto mb-6 floating-animation">
+                    <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4Z"/>
+                    </svg>
+                </div>
+                <h1 class="text-2xl font-black text-white arabic-title mb-2">نظام إدارة الحج</h1>
+                <p class="text-blue-200 text-sm">النظام المتقدم لإدارة موسم الحج</p>
+            </div>
+            
+            <div class="space-y-3">
+                <div class="nav-item active rounded-xl p-4 flex items-center text-white" onclick="showScreen('dashboard')">
+                    <svg class="w-6 h-6 ml-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M13,3V9H21V3M13,21H21V11H13M3,21H11V15H3M3,13H11V3H3V13Z"/>
+                    </svg>
+                    <span class="font-bold">الرئيسية</span>
+                </div>
+                
+                <div class="nav-item rounded-xl p-4 flex items-center text-white" onclick="showScreen('licenses')">
+                    <svg class="w-6 h-6 ml-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2Z"/>
+                    </svg>
+                    <span class="font-bold">التراخيص</span>
+                </div>
+                
+                <div class="nav-item rounded-xl p-4 flex items-center text-white" onclick="showScreen('operations')">
+                    <svg class="w-6 h-6 ml-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8Z"/>
+                    </svg>
+                    <span class="font-bold">تشغيل المواقع</span>
+                </div>
+                
+                <div class="nav-item rounded-xl p-4 flex items-center text-white relative" onclick="showScreen('housing')">
+                    <svg class="w-6 h-6 ml-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z"/>
+                    </svg>
+                    <span class="font-bold">الإسكان والإعاشة</span>
+                    <div class="notification-badge">3</div>
+                </div>
+                
+                <div class="nav-item rounded-xl p-4 flex items-center text-white" onclick="showScreen('contractors')">
+                    <svg class="w-6 h-6 ml-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12,15C12.81,15 13.5,14.7 14.11,14.11C14.7,13.5 15,12.81 15,12C15,11.19 14.7,10.5 14.11,9.89C13.5,9.3 12.81,9 12,9C11.19,9 10.5,9.3 9.89,9.89C9.3,10.5 9,11.19 9,12C9,12.81 9.3,13.5 9.89,14.11C10.5,14.7 11.19,15 12,15M12,2C14.21,2 16.21,2.81 17.78,4.39C19.36,5.96 20.17,7.96 20.17,10.17C20.17,12.54 19.5,14.69 18.33,16.04C17.16,17.38 15.21,18.93 12,22C8.79,18.93 6.84,17.38 5.67,16.04C4.5,14.69 3.83,12.54 3.83,10.17C3.83,7.96 4.64,5.96 6.22,4.39C7.79,2.81 9.79,2 12,2Z"/>
+                    </svg>
+                    <span class="font-bold">تأهيل المقاولين</span>
+                </div>
+                
+                <div class="nav-item rounded-xl p-4 flex items-center text-white relative" onclick="showScreen('reports')">
+                    <svg class="w-6 h-6 ml-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M13,14H11V10H13M13,18H11V16H13M1,21H23L12,2L1,21Z"/>
+                    </svg>
+                    <span class="font-bold">البلاغات</span>
+                    <div class="notification-badge">23</div>
+                </div>
+                
+                <div class="nav-item rounded-xl p-4 flex items-center text-white" onclick="showScreen('documents')">
+                    <svg class="w-6 h-6 ml-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6,2A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2H6Z"/>
+                    </svg>
+                    <span class="font-bold">الوثائق</span>
+                </div>
+                
+                <div class="nav-item rounded-xl p-4 flex items-center text-white" onclick="showScreen('users')">
+                    <svg class="w-6 h-6 ml-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M16,4C16.88,4 17.67,4.38 18.18,5L20.5,2.69L21.81,4L19.5,6.31C19.81,6.81 20,7.39 20,8A4,4 0 0,1 16,12A4,4 0 0,1 12,8A4,4 0 0,1 16,4Z"/>
+                    </svg>
+                    <span class="font-bold">المستخدمين</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="mr-80 p-8">
+        <!-- Dashboard Screen -->
+        <div id="dashboard" class="screen active">
+            <div class="container mx-auto px-6">
+                <div class="gradient-card rounded-2xl shadow-2xl p-8">
+                    <h2 class="text-4xl font-black text-gray-800 arabic-title mb-8 flex items-center">
+                        <div class="w-12 h-12 bg-gradient-to-br from-blue-400 to-purple-500 rounded-xl flex items-center justify-center ml-4 shadow-lg">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M13,3V9H21V3M13,21H21V11H13M3,21H11V15H3M3,13H11V3H3V13Z"/>
+                            </svg>
+                        </div>
+                        لوحة التحكم الرئيسية
+                    </h2>
+
+                    <!-- Key Metrics -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                        <div class="metric-card rounded-2xl p-6 border-2 border-blue-200 card-hover text-center">
+                            <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-purple-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M16,4C16.88,4 17.67,4.38 18.18,5L20.5,2.69L21.81,4L19.5,6.31C19.81,6.81 20,7.39 20,8A4,4 0 0,1 16,12A4,4 0 0,1 12,8A4,4 0 0,1 16,4Z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-3xl font-black text-blue-600 mb-2">2,847,392</h3>
+                            <p class="text-gray-600 font-medium">إجمالي الحجاج</p>
+                            <div class="mt-3 bg-blue-100 rounded-full h-2">
+                                <div class="progress-bar h-2 rounded-full bg-gradient-to-r from-blue-400 to-purple-500" style="width: 85%"></div>
+                            </div>
+                        </div>
+
+                        <div class="metric-card rounded-2xl p-6 border-2 border-green-200 card-hover text-center">
+                            <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-3xl font-black text-green-600 mb-2">1,247</h3>
+                            <p class="text-gray-600 font-medium">المواقع النشطة</p>
+                            <div class="mt-3 bg-green-100 rounded-full h-2">
+                                <div class="progress-bar h-2 rounded-full bg-gradient-to-r from-green-400 to-emerald-500" style="width: 92%"></div>
+                            </div>
+                        </div>
+
+                        <div class="metric-card rounded-2xl p-6 border-2 border-yellow-200 card-hover text-center">
+                            <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2Z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-3xl font-black text-yellow-600 mb-2">456</h3>
+                            <p class="text-gray-600 font-medium">التراخيص السارية</p>
+                            <div class="mt-3 bg-yellow-100 rounded-full h-2">
+                                <div class="progress-bar h-2 rounded-full bg-gradient-to-r from-yellow-400 to-orange-500" style="width: 78%"></div>
+                            </div>
+                        </div>
+
+                        <div class="metric-card rounded-2xl p-6 border-2 border-red-200 card-hover text-center">
+                            <div class="w-16 h-16 bg-gradient-to-br from-red-400 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M13,14H11V10H13M13,18H11V16H13M1,21H23L12,2L1,21Z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-3xl font-black text-red-600 mb-2 pulse-animation">23</h3>
+                            <p class="text-gray-600 font-medium">التنبيهات العاجلة</p>
+                            <div class="mt-3 bg-red-100 rounded-full h-2">
+                                <div class="progress-bar h-2 rounded-full bg-gradient-to-r from-red-400 to-pink-500" style="width: 23%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+                        <div class="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-8 border-2 border-blue-200 card-hover">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                                <svg class="w-6 h-6 text-blue-600 ml-3" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z"/>
+                                </svg>
+                                الإجراءات السريعة
+                            </h3>
+                            <div class="space-y-4">
+                                <button class="btn-primary w-full text-white py-4 px-6 rounded-xl font-bold shadow-xl" onclick="showScreen('licenses')">
+                                    <svg class="w-5 h-5 inline ml-2" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2Z"/>
+                                    </svg>
+                                    إصدار ترخيص جديد
+                                </button>
+                                <button class="btn-secondary w-full text-white py-4 px-6 rounded-xl font-bold shadow-xl" onclick="showScreen('operations')">
+                                    <svg class="w-5 h-5 inline ml-2" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+                                    </svg>
+                                    مراقبة المواقع
+                                </button>
+                                <button class="btn-success w-full text-white py-4 px-6 rounded-xl font-bold shadow-xl" onclick="showScreen('housing')">
+                                    <svg class="w-5 h-5 inline ml-2" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z"/>
+                                    </svg>
+                                    إدارة الإسكان
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-8 border-2 border-green-200 card-hover">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                                <svg class="w-6 h-6 text-green-600 ml-3" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M16.2,16.2L11,13V7H12.5V12.2L17,14.9L16.2,16.2Z"/>
+                                </svg>
+                                آخر الأنشطة
+                            </h3>
+                            <div class="space-y-4">
+                                <div class="bg-white rounded-xl p-4 border border-green-200">
+                                    <p class="text-sm font-bold text-gray-800">تم إصدار ترخيص جديد</p>
+                                    <p class="text-xs text-gray-600">منذ 5 دقائق</p>
+                                </div>
+                                <div class="bg-white rounded-xl p-4 border border-green-200">
+                                    <p class="text-sm font-bold text-gray-800">تحديث حالة الموقع أ-123</p>
+                                    <p class="text-xs text-gray-600">منذ 15 دقيقة</p>
+                                </div>
+                                <div class="bg-white rounded-xl p-4 border border-green-200">
+                                    <p class="text-sm font-bold text-gray-800">إضافة مستخدم جديد</p>
+                                    <p class="text-xs text-gray-600">منذ 30 دقيقة</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-2xl p-8 border-2 border-yellow-200 card-hover">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                                <svg class="w-6 h-6 text-yellow-600 ml-3" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M13,14H11V10H13M13,18H11V16H13M1,21H23L12,2L1,21Z"/>
+                                </svg>
+                                التنبيهات المهمة
+                            </h3>
+                            <div class="space-y-4">
+                                <div class="bg-white rounded-xl p-4 border-r-4 border-red-500">
+                                    <p class="text-sm font-bold text-gray-800">انقطاع كهرباء - منى أ</p>
+                                    <p class="text-xs text-gray-600">يحتاج تدخل عاجل</p>
+                                </div>
+                                <div class="bg-white rounded-xl p-4 border-r-4 border-yellow-500">
+                                    <p class="text-sm font-bold text-gray-800">صيانة دورية مجدولة</p>
+                                    <p class="text-xs text-gray-600">غداً الساعة 2:00 ص</p>
+                                </div>
+                                <div class="bg-white rounded-xl p-4 border-r-4 border-blue-500">
+                                    <p class="text-sm font-bold text-gray-800">تحديث النظام</p>
+                                    <p class="text-xs text-gray-600">متاح الآن</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- System Status -->
+                    <div class="bg-gradient-to-br from-gray-50 to-blue-50 rounded-2xl p-8 border border-gray-200">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                            <svg class="w-6 h-6 text-purple-600 ml-3" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M3,3H21A2,2 0 0,1 23,5V19A2,2 0 0,1 21,21H3A2,2 0 0,1 1,19V5A2,2 0 0,1 3,3M3,5V19H21V5H3M5,7H19V9H5V7M5,11H19V13H5V11M5,15H19V17H5V15Z"/>
+                            </svg>
+                            حالة الأنظمة
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                            <div class="bg-white rounded-2xl p-6 shadow-lg card-hover text-center">
+                                <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/>
+                                    </svg>
+                                </div>
+                                <h4 class="text-xl font-black text-green-600 mb-2">نظام التراخيص</h4>
+                                <p class="text-gray-600 font-medium">يعمل بشكل طبيعي</p>
+                            </div>
+
+                            <div class="bg-white rounded-2xl p-6 shadow-lg card-hover text-center">
+                                <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/>
+                                    </svg>
+                                </div>
+                                <h4 class="text-xl font-black text-green-600 mb-2">نظام المواقع</h4>
+                                <p class="text-gray-600 font-medium">يعمل بشكل طبيعي</p>
+                            </div>
+
+                            <div class="bg-white rounded-2xl p-6 shadow-lg card-hover text-center">
+                                <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17M11,9H13V7H11V9Z"/>
+                                    </svg>
+                                </div>
+                                <h4 class="text-xl font-black text-yellow-600 mb-2">نظام الإسكان</h4>
+                                <p class="text-gray-600 font-medium">صيانة مجدولة</p>
+                            </div>
+
+                            <div class="bg-white rounded-2xl p-6 shadow-lg card-hover text-center">
+                                <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/>
+                                    </svg>
+                                </div>
+                                <h4 class="text-xl font-black text-green-600 mb-2">نظام الوثائق</h4>
+                                <p class="text-gray-600 font-medium">يعمل بشكل طبيعي</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Licenses Screen -->
+        <div id="licenses" class="screen">
+            <div class="container mx-auto px-6">
+                <div class="gradient-card rounded-2xl shadow-2xl p-8">
+                    <h2 class="text-4xl font-black text-gray-800 arabic-title mb-8 flex items-center">
+                        <div class="w-12 h-12 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-xl flex items-center justify-center ml-4 shadow-lg">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2Z"/>
+                            </svg>
+                        </div>
+                        إدارة التراخيص
+                    </h2>
+
+                    <!-- License Statistics -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+                        <div class="metric-card rounded-2xl p-6 border-2 border-yellow-200 card-hover text-center">
+                            <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2Z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-3xl font-black text-yellow-600 mb-2">456</h3>
+                            <p class="text-gray-600 font-medium">إجمالي التراخيص</p>
+                            <div class="mt-3 bg-yellow-100 rounded-full h-2">
+                                <div class="progress-bar h-2 rounded-full bg-gradient-to-r from-yellow-400 to-orange-500" style="width: 85%"></div>
+                            </div>
+                        </div>
+
+                        <div class="metric-card rounded-2xl p-6 border-2 border-green-200 card-hover text-center">
+                            <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-3xl font-black text-green-600 mb-2">398</h3>
+                            <p class="text-gray-600 font-medium">تراخيص نشطة</p>
+                            <div class="mt-3 bg-green-100 rounded-full h-2">
+                                <div class="progress-bar h-2 rounded-full bg-gradient-to-r from-green-400 to-emerald-500" style="width: 87%"></div>
+                            </div>
+                        </div>
+
+                        <div class="metric-card rounded-2xl p-6 border-2 border-red-200 card-hover text-center">
+                            <div class="w-16 h-16 bg-gradient-to-br from-red-400 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M16.2,16.2L11,13V7H12.5V12.2L17,14.9L16.2,16.2Z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-3xl font-black text-red-600 mb-2">34</h3>
+                            <p class="text-gray-600 font-medium">منتهية الصلاحية</p>
+                            <div class="mt-3 bg-red-100 rounded-full h-2">
+                                <div class="progress-bar h-2 rounded-full bg-gradient-to-r from-red-400 to-pink-500" style="width: 7%"></div>
+                            </div>
+                        </div>
+
+                        <div class="metric-card rounded-2xl p-6 border-2 border-blue-200 card-hover text-center">
+                            <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-purple-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17M11,9H13V7H11V9Z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-3xl font-black text-blue-600 mb-2">24</h3>
+                            <p class="text-gray-600 font-medium">قيد المراجعة</p>
+                            <div class="mt-3 bg-blue-100 rounded-full h-2">
+                                <div class="progress-bar h-2 rounded-full bg-gradient-to-r from-blue-400 to-purple-500" style="width: 5%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- License Management Form -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+                        <div class="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-2xl p-8 border-2 border-yellow-200 card-hover">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                                <svg class="w-6 h-6 text-yellow-600 ml-3" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z"/>
+                                </svg>
+                                إصدار ترخيص جديد
+                            </h3>
+                            <form class="space-y-6" onsubmit="handleLicenseFormSubmit(event)">
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-3">نوع الترخيص</label>
+                                    <select class="input-focus w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-yellow-100 focus:border-yellow-500 font-medium" required>
+                                        <option value="">اختر نوع الترخيص</option>
+                                        <option>ترخيص إسكان</option>
+                                        <option>ترخيص إعاشة</option>
+                                        <option>ترخيص نقل</option>
+                                        <option>ترخيص خدمات طبية</option>
+                                        <option>ترخيص أمن وسلامة</option>
+                                        <option>ترخيص نظافة</option>
+                                        <option>ترخيص صيانة</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-3">اسم المقاول</label>
+                                    <input type="text" class="input-focus w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-yellow-100 focus:border-yellow-500 font-medium" placeholder="أدخل اسم المقاول" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-3">رقم السجل التجاري</label>
+                                    <input type="text" class="input-focus w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-yellow-100 focus:border-yellow-500 font-medium" placeholder="أدخل رقم السجل التجاري" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-3">تاريخ البداية</label>
+                                    <input type="date" class="input-focus w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-yellow-100 focus:border-yellow-500 font-medium" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-3">تاريخ الانتهاء</label>
+                                    <input type="date" class="input-focus w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-yellow-100 focus:border-yellow-500 font-medium" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-3">الموقع المخصص</label>
+                                    <select class="input-focus w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-yellow-100 focus:border-yellow-500 font-medium" required>
+                                        <option value="">اختر الموقع</option>
+                                        <option>منى - القطاع أ</option>
+                                        <option>منى - القطاع ب</option>
+                                        <option>منى - القطاع ج</option>
+                                        <option>عرفات - القطاع أ</option>
+                                        <option>عرفات - القطاع ب</option>
+                                        <option>مزدلفة - القطاع أ</option>
+                                        <option>مزدلفة - القطاع ب</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn-warning w-full text-white py-4 px-6 rounded-xl font-bold shadow-xl">
+                                    <svg class="w-5 h-5 inline ml-2" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"/>
+                                    </svg>
+                                    إصدار الترخيص
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- License Search -->
+                        <div class="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-8 border-2 border-blue-200 card-hover">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                                <svg class="w-6 h-6 text-blue-600 ml-3" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"/>
+                                </svg>
+                                البحث في التراخيص
+                            </h3>
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-3">رقم الترخيص</label>
+                                    <input type="text" class="input-focus w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-medium" placeholder="أدخل رقم الترخيص">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-3">اسم المقاول</label>
+                                    <input type="text" class="input-focus w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-medium" placeholder="أدخل اسم المقاول">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-3">نوع الترخيص</label>
+                                    <select class="input-focus w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-medium">
+                                        <option value="">جميع الأنواع</option>
+                                        <option>ترخيص إسكان</option>
+                                        <option>ترخيص إعاشة</option>
+                                        <option>ترخيص نقل</option>
+                                        <option>ترخيص خدمات طبية</option>
+                                        <option>ترخيص أمن وسلامة</option>
+                                        <option>ترخيص نظافة</option>
+                                        <option>ترخيص صيانة</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-3">حالة الترخيص</label>
+                                    <select class="input-focus w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-medium">
+                                        <option value="">جميع الحالات</option>
+                                        <option>نشط</option>
+                                        <option>منتهي الصلاحية</option>
+                                        <option>قيد المراجعة</option>
+                                        <option>معلق</option>
+                                        <option>ملغي</option>
+                                    </select>
+                                </div>
+                                <button class="btn-primary w-full text-white py-4 px-6 rounded-xl font-bold shadow-xl" onclick="searchLicenses()">
+                                    <svg class="w-5 h-5 inline ml-2" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"/>
+                                    </svg>
+                                    بحث
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Licenses Table -->
+                    <div class="bg-gradient-to-br from-gray-50 to-blue-50 rounded-2xl p-8 border border-gray-200">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                            <svg class="w-6 h-6 text-purple-600 ml-3" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,5V19H5V5H19Z"/>
+                            </svg>
+                            التراخيص الحالية
+                        </h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full bg-white rounded-2xl overflow-hidden shadow-lg">
+                                <thead class="bg-gradient-to-r from-gray-100 to-blue-100">
+                                    <tr>
+                                        <th class="px-6 py-4 text-right text-sm font-bold text-gray-700">رقم الترخيص</th>
+                                        <th class="px-6 py-4 text-right text-sm font-bold text-gray-700">المقاول</th>
+                                        <th class="px-6 py-4 text-right text-sm font-bold text-gray-700">النوع</th>
+                                        <th class="px-6 py-4 text-right text-sm font-bold text-gray-700">الموقع</th>
+                                        <th class="px-6 py-4 text-right text-sm font-bold text-gray-700">تاريخ الانتهاء</th>
+                                        <th class="px-6 py-4 text-right text-sm font-bold text-gray-700">الحالة</th>
+                                        <th class="px-6 py-4 text-right text-sm font-bold text-gray-700">الإجراءات</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200">
+                                    <tr class="hover:bg-gray-50 transition-colors">
+                                        <td class="px-6 py-4 text-sm font-bold text-gray-900">LIC-2024-001</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">شركة الإسكان المتطورة</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">ترخيص إسكان</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">منى - القطاع أ</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">2024/12/31</td>
+                                        <td class="px-6 py-4">
+                                            <span class="status-badge bg-gradient-to-r from-green-400 to-emerald-500 text-white px-4 py-2 rounded-full text-sm font-bold">نشط</span>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="flex space-x-2 space-x-reverse">
+                                                <button class="btn-primary text-white px-3 py-1 rounded-lg text-xs font-bold shadow-lg">
+                                                    عرض
+                                                </button>
+                                                <button class="btn-secondary text-white px-3 py-1 rounded-lg text-xs font-bold shadow-lg">
+                                                    تعديل
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition-colors">
+                                        <td class="px-6 py-4 text-sm font-bold text-gray-900">LIC-2024-002</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">مؤسسة الإعاشة الذهبية</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">ترخيص إعاشة</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">عرفات - القطاع ب</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">2024/12/31</td>
+                                        <td class="px-6 py-4">
+                                            <span class="status-badge bg-gradient-to-r from-green-400 to-emerald-500 text-white px-4 py-2 rounded-full text-sm font-bold">نشط</span>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="flex space-x-2 space-x-reverse">
+                                                <button class="btn-primary text-white px-3 py-1 rounded-lg text-xs font-bold shadow-lg">
+                                                    عرض
+                                                </button>
+                                                <button class="btn-secondary text-white px-3 py-1 rounded-lg text-xs font-bold shadow-lg">
+                                                    تعديل
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition-colors">
+                                        <td class="px-6 py-4 text-sm font-bold text-gray-900">LIC-2024-003</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">شركة النقل السريع</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">ترخيص نقل</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">مزدلفة - القطاع أ</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">2024/01/15</td>
+                                        <td class="px-6 py-4">
+                                            <span class="status-badge bg-gradient-to-r from-red-400 to-pink-500 text-white px-4 py-2 rounded-full text-sm font-bold">منتهي</span>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="flex space-x-2 space-x-reverse">
+                                                <button class="btn-primary text-white px-3 py-1 rounded-lg text-xs font-bold shadow-lg">
+                                                    عرض
+                                                </button>
+                                                <button class="btn-warning text-white px-3 py-1 rounded-lg text-xs font-bold shadow-lg">
+                                                    تجديد
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition-colors">
+                                        <td class="px-6 py-4 text-sm font-bold text-gray-900">LIC-2024-004</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">مركز الخدمات الطبية</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">ترخيص خدمات طبية</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">منى - القطاع ج</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">2024/12/31</td>
+                                        <td class="px-6 py-4">
+                                            <span class="status-badge bg-gradient-to-r from-blue-400 to-purple-500 text-white px-4 py-2 rounded-full text-sm font-bold">قيد المراجعة</span>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="flex space-x-2 space-x-reverse">
+                                                <button class="btn-primary text-white px-3 py-1 rounded-lg text-xs font-bold shadow-lg">
+                                                    عرض
+                                                </button>
+                                                <button class="btn-success text-white px-3 py-1 rounded-lg text-xs font-bold shadow-lg">
+                                                    موافقة
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Operations Screen -->
+        <div id="operations" class="screen">
+            <div class="container mx-auto px-6">
+                <div class="gradient-card rounded-2xl shadow-2xl p-8">
+                    <h2 class="text-4xl font-black text-gray-800 arabic-title mb-8 flex items-center">
+                        <div class="w-12 h-12 bg-gradient-to-br from-purple-400 to-pink-500 rounded-xl flex items-center justify-center ml-4 shadow-lg">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8Z"/>
+                            </svg>
+                        </div>
+                        تشغيل المواقع
+                    </h2>
+
+                    <!-- Operations Statistics -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+                        <div class="metric-card rounded-2xl p-6 border-2 border-purple-200 card-hover text-center">
+                            <div class="w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12,2C14.21,2 16.21,2.81 17.78,4.39C19.36,5.96 20.17,7.96 20.17,10.17C20.17,12.54 19.5,14.69 18.33,16.04C17.16,17.38 15.21,18.93 12,22C8.79,18.93 6.84,17.38 5.67,16.04C4.5,14.69 3.83,12.54 3.83,10.17C3.83,7.96 4.64,5.96 6.22,4.39C7.79,2.81 9.79,2 12,2Z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-3xl font-black text-purple-600 mb-2">1,247</h3>
+                            <p class="text-gray-600 font-medium">إجمالي المواقع</p>
+                            <div class="mt-3 bg-purple-100 rounded-full h-2">
+                                <div class="progress-bar h-2 rounded-full bg-gradient-to-r from-purple-400 to-pink-500" style="width: 100%"></div>
+                            </div>
+                        </div>
+
+                        <div class="metric-card rounded-2xl p-6 border-2 border-green-200 card-hover text-center">
+                            <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-3xl font-black text-green-600 mb-2">1,198</h3>
+                            <p class="text-gray-600 font-medium">مواقع نشطة</p>
+                            <div class="mt-3 bg-green-100 rounded-full h-2">
+                                <div class="progress-bar h-2 rounded-full bg-gradient-to-r from-green-400 to-emerald-500" style="width: 96%"></div>
+                            </div>
+                        </div>
+
+                        <div class="metric-card rounded-2xl p-6 border-2 border-yellow-200 card-hover text-center">
+                            <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17M11,9H13V7H11V9Z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-3xl font-black text-yellow-600 mb-2">32</h3>
+                            <p class="text-gray-600 font-medium">تحت الصيانة</p>
+                            <div class="mt-3 bg-yellow-100 rounded-full h-2">
+                                <div class="progress-bar h-2 rounded-full bg-gradient-to-r from-yellow-400 to-orange-500" style="width: 3%"></div>
+                            </div>
+                        </div>
+
+                        <div class="metric-card rounded-2xl p-6 border-2 border-red-200 card-hover text-center">
+                            <div class="w-16 h-16 bg-gradient-to-br from-red-400 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M13,14H11V10H13M13,18H11V16H13M1,21H23L12,2L1,21Z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-3xl font-black text-red-600 mb-2 pulse-animation">17</h3>
+                            <p class="text-gray-600 font-medium">خارج الخدمة</p>
+                            <div class="mt-3 bg-red-100 rounded-full h-2">
+                                <div class="progress-bar h-2 rounded-full bg-gradient-to-r from-red-400 to-pink-500" style="width: 1%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Operations Map and Controls -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+                        <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-8 border-2 border-purple-200 card-hover">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                                <svg class="w-6 h-6 text-purple-600 ml-3" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12,2C14.21,2 16.21,2.81 17.78,4.39C19.36,5.96 20.17,7.96 20.17,10.17C20.17,12.54 19.5,14.69 18.33,16.04C17.16,17.38 15.21,18.93 12,22C8.79,18.93 6.84,17.38 5.67,16.04C4.5,14.69 3.83,12.54 3.83,10.17C3.83,7.96 4.64,5.96 6.22,4.39C7.79,2.81 9.79,2 12,2Z"/>
+                                </svg>
+                                خريطة المواقع التشغيلية
+                            </h3>
+                            <div class="interactive-map h-96 relative">
+                                <div class="map-legend">
+                                    <div class="legend-item">
+                                        <div class="legend-color" style="background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);"></div>
+                                        <span>مواقع نشطة</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color" style="background: linear-gradient(135deg, #ffc107 0%, #f57c00 100%);"></div>
+                                        <span>تحت الصيانة</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color" style="background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);"></div>
+                                        <span>خارج الخدمة</span>
+                                    </div>
+                                </div>
+
+                                <div class="map-controls">
+                                    <button class="map-control-btn active" onclick="toggleOperationsLayer('all')">الكل</button>
+                                    <button class="map-control-btn" onclick="toggleOperationsLayer('active')">نشط</button>
+                                    <button class="map-control-btn" onclick="toggleOperationsLayer('maintenance')">صيانة</button>
+                                    <button class="map-control-btn" onclick="toggleOperationsLayer('offline')">معطل</button>
+                                </div>
+
+                                <!-- Active Sites -->
+                                <div class="map-location" style="background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%); top: 20%; left: 15%;" data-tooltip="موقع منى أ-001<br>النوع: إسكان<br>الحالة: نشط<br>السعة: 50,000 حاج<br>الإشغال: 92%<br>آخر فحص: منذ 30 دقيقة">A1</div>
+                                <div class="map-location" style="background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%); top: 35%; left: 25%;" data-tooltip="موقع منى ب-002<br>النوع: إعاشة<br>الحالة: نشط<br>الطاقة: 100,000 وجبة/يوم<br>الإنتاج: 95,000<br>آخر فحص: منذ 15 دقيقة">B2</div>
+                                <div class="map-location" style="background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%); top: 50%; left: 40%;" data-tooltip="موقع عرفات ج-003<br>النوع: إسكان<br>الحالة: نشط<br>السعة: 120,000 حاج<br>الإشغال: 98%<br>آخر فحص: منذ 10 دقائق">C3</div>
+                                <div class="map-location" style="background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%); top: 25%; left: 60%;" data-tooltip="موقع مزدلفة د-004<br>النوع: خدمات طبية<br>الحالة: نشط<br>عدد الأطباء: 45<br>الحالات اليوم: 234<br>آخر فحص: منذ 5 دقائق">D4</div>
+
+                                <!-- Maintenance Sites -->
+                                <div class="map-location" style="background: linear-gradient(135deg, #ffc107 0%, #f57c00 100%); top: 70%; left: 30%;" data-tooltip="موقع منى هـ-005<br>النوع: نظافة<br>الحالة: تحت الصيانة<br>نوع الصيانة: دورية<br>المدة المتوقعة: 4 ساعات<br>بدء الصيانة: منذ ساعتين">E5</div>
+                                <div class="map-location" style="background: linear-gradient(135deg, #ffc107 0%, #f57c00 100%); top: 15%; left: 75%;" data-tooltip="موقع مزدلفة و-006<br>النوع: كهرباء<br>الحالة: تحت الصيانة<br>نوع الصيانة: طارئة<br>المدة المتوقعة: 6 ساعات<br>بدء الصيانة: منذ ساعة">F6</div>
+
+                                <!-- Offline Sites -->
+                                <div class="map-location" style="background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%); animation: pulse 2s infinite; top: 60%; left: 70%;" data-tooltip="موقع عرفات ز-007<br>النوع: مياه<br>الحالة: خارج الخدمة<br>سبب التعطل: عطل في المضخات<br>الأولوية: عاجل<br>وقت التعطل: منذ 3 ساعات">G7</div>
+                                <div class="map-location" style="background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%); animation: pulse 2s infinite; top: 45%; left: 15%;" data-tooltip="موقع منى ح-008<br>النوع: تكييف<br>الحالة: خارج الخدمة<br>سبب التعطل: انقطاع كهرباء<br>الأولوية: عاجل جداً<br>وقت التعطل: منذ ساعة">H8</div>
+
+                                <div class="map-tooltip" id="operationsMapTooltip"></div>
+                            </div>
+                        </div>
+
+                        <!-- Site Control Panel -->
+                        <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 border-2 border-blue-200 card-hover">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                                <svg class="w-6 h-6 text-blue-600 ml-3" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8M12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10Z"/>
+                                </svg>
+                                لوحة التحكم في المواقع
+                            </h3>
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-3">اختر الموقع</label>
+                                    <select class="input-focus w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-medium" onchange="loadSiteDetails(this.value)">
+                                        <option value="">اختر موقع للتحكم</option>
+                                        <option value="A1">منى أ-001 - إسكان</option>
+                                        <option value="B2">منى ب-002 - إعاشة</option>
+                                        <option value="C3">عرفات ج-003 - إسكان</option>
+                                        <option value="D4">مزدلفة د-004 - خدمات طبية</option>
+                                        <option value="E5">منى هـ-005 - نظافة</option>
+                                        <option value="F6">مزدلفة و-006 - كهرباء</option>
+                                        <option value="G7">عرفات ز-007 - مياه</option>
+                                        <option value="H8">منى ح-008 - تكييف</option>
+                                    </select>
+                                </div>
+
+                                <div id="siteDetailsPanel" class="hidden">
+                                    <div class="bg-white rounded-xl p-6 border border-blue-200 mb-6">
+                                        <h4 class="text-lg font-bold text-gray-800 mb-4">تفاصيل الموقع</h4>
+                                        <div id="siteInfo" class="space-y-3">
+                                            <!-- Site details will be loaded here -->
+                                        </div>
+                                    </div>
+
+                                    <div class="space-y-4">
+                                        <button class="btn-success w-full text-white py-3 px-6 rounded-xl font-bold shadow-xl" onclick="activateSite()">
+                                            <svg class="w-5 h-5 inline ml-2" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M8,5.14V19.14L19,12.14L8,5.14Z"/>
+                                            </svg>
+                                            تشغيل الموقع
+                                        </button>
+                                        <button class="btn-warning w-full text-white py-3 px-6 rounded-xl font-bold shadow-xl" onclick="scheduleMaintenance()">
+                                            <svg class="w-5 h-5 inline ml-2" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M16.2,16.2L11,13V7H12.5V12.2L17,14.9L16.2,16.2Z"/>
+                                            </svg>
+                                            جدولة صيانة
+                                        </button>
+                                        <button class="btn-danger w-full text-white py-3 px-6 rounded-xl font-bold shadow-xl" onclick="shutdownSite()">
+                                            <svg class="w-5 h-5 inline ml-2" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M16.56,5.44L15.11,6.89C16.84,7.94 18,9.83 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12C6,9.83 7.16,7.94 8.88,6.88L7.44,5.44C5.36,6.88 4,9.28 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12C20,9.28 18.64,6.88 16.56,5.44M13,3H11V13H13"/>
+                                            </svg>
+                                            إيقاف الموقع
+                                        </button>
+                                        <button class="btn-primary w-full text-white py-3 px-6 rounded-xl font-bold shadow-xl" onclick="generateSiteReport()">
+                                            <svg class="w-5 h-5 inline ml-2" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                                            </svg>
+                                            تقرير الموقع
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sites Status Table -->
+                    <div class="bg-gradient-to-br from-gray-50 to-blue-50 rounded-2xl p-8 border border-gray-200">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                            <svg class="w-6 h-6 text-purple-600 ml-3" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,5V19H5V5H19Z"/>
+                            </svg>
+                            حالة المواقع
+                        </h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full bg-white rounded-2xl overflow-hidden shadow-lg">
+                                <thead class="bg-gradient-to-r from-gray-100 to-blue-100">
+                                    <tr>
+                                        <th class="px-6 py-4 text-right text-sm font-bold text-gray-700">رمز الموقع</th>
+                                        <th class="px-6 py-4 text-right text-sm font-bold text-gray-700">الاسم</th>
+                                        <th class="px-6 py-4 text-right text-sm font-bold text-gray-700">النوع</th>
+                                        <th class="px-6 py-4 text-right text-sm font-bold text-gray-700">المنطقة</th>
+                                        <th class="px-6 py-4 text-right text-sm font-bold text-gray-700">الحالة</th>
+                                        <th class="px-6 py-4 text-right text-sm font-bold text-gray-700">آخر فحص</th>
+                                        <th class="px-6 py-4 text-right text-sm font-bold text-gray-700">الإجراءات</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200">
+                                    <tr class="hover:bg-gray-50 transition-colors">
+                                        <td class="px-6 py-4 text-sm font-bold text-gray-900">A-001</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">مجمع الإسكان الرئيسي</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">إسكان</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">منى</td>
+                                        <td class="px-6 py-4">
+                                            <span class="status-badge bg-gradient-to-r from-green-400 to-emerald-500 text-white px-4 py-2 rounded-full text-sm font-bold">نشط</span>
+                                        </td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">منذ 30 دقيقة</td>
+                                        <td class="px-6 py-4">
+                                            <div class="flex space-x-2 space-x-reverse">
+                                                <button class="btn-primary text-white px-3 py-1 rounded-lg text-xs font-bold shadow-lg">
+                                                    مراقبة
+                                                </button>
+                                                <button class="btn-secondary text-white px-3 py-1 rounded-lg text-xs font-bold shadow-lg">
+                                                    تحكم
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition-colors">
+                                        <td class="px-6 py-4 text-sm font-bold text-gray-900">B-002</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">مركز الإعاشة المركزي</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">إعاشة</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">منى</td>
+                                        <td class="px-6 py-4">
+                                            <span class="status-badge bg-gradient-to-r from-green-400 to-emerald-500 text-white px-4 py-2 rounded-full text-sm font-bold">نشط</span>
+                                        </td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">منذ 15 دقيقة</td>
+                                        <td class="px-6 py-4">
+                                            <div class="flex space-x-2 space-x-reverse">
+                                                <button class="btn-primary text-white px-3 py-1 rounded-lg text-xs font-bold shadow-lg">
+                                                    مراقبة
+                                                </button>
+                                                <button class="btn-secondary text-white px-3 py-1 rounded-lg text-xs font-bold shadow-lg">
+                                                    تحكم
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition-colors">
+                                        <td class="px-6 py-4 text-sm font-bold text-gray-900">E-005</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">محطة النظافة الشمالية</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">نظافة</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">منى</td>
+                                        <td class="px-6 py-4">
+                                            <span class="status-badge bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-4 py-2 rounded-full text-sm font-bold">صيانة</span>
+                                        </td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">منذ ساعتين</td>
+                                        <td class="px-6 py-4">
+                                            <div class="flex space-x-2 space-x-reverse">
+                                                <button class="btn-warning text-white px-3 py-1 rounded-lg text-xs font-bold shadow-lg">
+                                                    صيانة
+                                                </button>
+                                                <button class="btn-success text-white px-3 py-1 rounded-lg text-xs font-bold shadow-lg">
+                                                    تشغيل
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition-colors">
+                                        <td class="px-6 py-4 text-sm font-bold text-gray-900">G-007</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">محطة المياه الرئيسية</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">مياه</td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">عرفات</td>
+                                        <td class="px-6 py-4">
+                                            <span class="status-badge bg-gradient-to-r from-red-400 to-pink-500 text-white px-4 py-2 rounded-full text-sm font-bold pulse-animation">معطل</span>
+                                        </td>
+                                        <td class="px-6 py-4 text-sm text-gray-600">منذ 3 ساعات</td>
+                                        <td class="px-6 py-4">
+                                            <div class="flex space-x-2 space-x-reverse">
+                                                <button class="btn-danger text-white px-3 py-1 rounded-lg text-xs font-bold shadow-lg">
+                                                    عاجل
+                                                </button>
+                                                <button class="btn-warning text-white px-3 py-1 rounded-lg text-xs font-bold shadow-lg">
+                                                    إصلاح
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Housing Screen -->
+        <div id="housing" class="screen">
+            <div class="container mx-auto px-6">
+                <div class="gradient-card rounded-2xl shadow-2xl p-8">
+                    <h2 class="text-4xl font-black text-gray-800 arabic-title mb-8 flex items-center">
+                        <div class="w-12 h-12 bg-gradient-to-br from-green-400 to-emerald-500 rounded-xl flex items-center justify-center ml-4 shadow-lg">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z"/>
+                            </svg>
+                        </div>
+                        إدارة الإسكان والإعاشة
+                    </h2>
+
+                    <!-- Housing Statistics -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+                        <div class="metric-card rounded-2xl p-6 border-2 border-green-200 card-hover text-center">
+                            <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-3xl font-black text-green-600 mb-2">1,247</h3>
+                            <p class="text-gray-600 font-medium">وحدات الإسكان</p>
+                            <div class="mt-3 bg-green-100 rounded-full h-2">
+                                <div class="progress-bar h-2 rounded-full bg-gradient-to-r from-green-400 to-emerald-500" style="width: 85%"></div>
+                            </div>
+                        </div>
+
+                        <div class="metric-card rounded-2xl p-6 border-2 border-blue-200 card-hover text-center">
+                            <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-purple-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M16,4C16.88,4 17.67,4.38 18.18,5L20.5,2.69L21.81,4L19.5,6.31C19.81,6.81 20,7.39 20,8A4,4 0 0,1 16,12A4,4 0 0,1 12,8A4,4 0 0,1 16,4Z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-3xl font-black text-blue-600 mb-2">2,847,392</h3>
+                            <p class="text-gray-600 font-medium">الحجاج المسكنين</p>
+                            <div class="mt-3 bg-blue-100 rounded-full h-2">
+                                <div class="progress-bar h-2 rounded-full bg-gradient-to-r from-blue-400 to-purple-500" style="width: 92%"></div>
+                            </div>
+                        </div>
+
+                        <div class="metric-card rounded-2xl p-6 border-2 border-orange-200 card-hover text-center">
+                            <div class="w-16 h-16 bg-gradient-to-br from-orange-400 to-red-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M18.06 22.99H1.94C1.28 22.99 0.729999 22.45 0.729999 21.8V2.2C0.729999 1.55 1.28 1.01 1.94 1.01H18.06C18.72 1.01 19.27 1.55 19.27 2.2V21.8C19.27 22.45 18.72 22.99 18.06 22.99Z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-3xl font-black text-orange-600 mb-2">456</h3>
+                            <p class="text-gray-600 font-medium">مراكز الإعاشة</p>
+                            <div class="mt-3 bg-orange-100 rounded-full h-2">
+                                <div class="progress-bar h-2 rounded-full bg-gradient-to-r from-orange-400 to-red-500" style="width: 78%"></div>
+                            </div>
+                        </div>
+
+                        <div class="metric-card rounded-2xl p-6 border-2 border-yellow-200 card-hover text-center">
+                            <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M16.2,16.2L11,13V7H12.5V12.2L17,14.9L16.2,16.2Z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-3xl font-black text-yellow-600 mb-2">89%</h3>
+                            <p class="text-gray-600 font-medium">معدل الإشغال</p>
+                            <div class="mt-3 bg-yellow-100 rounded-full h-2">
+                                <div class="progress-bar h-2 rounded-full bg-gradient-to-r from-yellow-400 to-orange-500" style="width: 89%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Housing Map -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+                        <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-8 border-2 border-green-200 card-hover">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                                <svg class="w-6 h-6 text-green-600 ml-3" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12,2C14.21,2 16.21,2.81 17.78,4.39C19.36,5.96 20.17,7.96 20.17,10.17C20.17,12.54 19.5,14.69 18.33,16.04C17.16,17.38 15.21,18.93 12,22C8.79,18.93 6.84,17.38 5.67,16.04C4.5,14.69 3.83,12.54 3.83,10.17C3.83,7.96 4.64,5.96 6.22,4.39C7.79,2.81 9.79,2 12,2Z"/>
+                                </svg>
+                                خريطة الإسكان والإعاشة التفاعلية
+                            </h3>
+                            <div class="interactive-map h-96 relative">
+                                <div class="map-legend">
+                                    <div class="legend-item">
+                                        <div class="legend-color housing"></div>
+                                        <span>وحدات الإسكان</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color catering"></div>
+                                        <span>مراكز الإعاشة</span>
+                                    </div>
+                                </div>
+
+                                <div class="map-controls">
+                                    <button class="map-control-btn active" onclick="toggleMapLayer('all')">الكل</button>
+                                    <button class="map-control-btn" onclick="toggleMapLayer('housing')">إسكان</button>
+                                    <button class="map-control-btn" onclick="toggleMapLayer('catering')">إعاشة</button>
+                                </div>
+
+                                <!-- Housing Units -->
+                                <div class="map-location housing" style="top: 20%; left: 15%;" data-tooltip="مجمع الإسكان أ - منى<br>السعة: 50,000 حاج<br>الإشغال: 46,000 (92%)<br>الحالة: نشط<br>آخر تحديث: منذ 5 دقائق">H1</div>
+                                <div class="map-location housing" style="top: 35%; left: 25%;" data-tooltip="مجمع الإسكان ب - منى<br>السعة: 75,000 حاج<br>الإشغال: 66,000 (88%)<br>الحالة: نشط<br>آخر تحديث: منذ 3 دقائق">H2</div>
+                                <div class="map-location housing" style="top: 50%; left: 40%;" data-tooltip="مجمع الإسكان ج - عرفات<br>السعة: 120,000 حاج<br>الإشغال: 114,000 (95%)<br>الحالة: نشط<br>آخر تحديث: منذ دقيقة">H3</div>
+                                <div class="map-location housing" style="top: 25%; left: 60%;" data-tooltip="مجمع الإسكان د - مزدلفة<br>السعة: 80,000 حاج<br>الإشغال: 68,000 (85%)<br>الحالة: نشط<br>آخر تحديث: منذ 7 دقائق">H4</div>
+                                <div class="map-location housing" style="top: 70%; left: 30%;" data-tooltip="مجمع الإسكان هـ - منى<br>السعة: 60,000 حاج<br>الإشغال: 54,000 (90%)<br>الحالة: نشط<br>آخر تحديث: منذ 2 دقيقة">H5</div>
+                                <div class="map-location housing" style="top: 15%; left: 75%;" data-tooltip="مجمع الإسكان و - مزدلفة<br>السعة: 45,000 حاج<br>الإشغال: 38,250 (85%)<br>الحالة: نشط<br>آخر تحديث: منذ 4 دقائق">H6</div>
+
+                                <!-- Catering Centers -->
+                                <div class="map-location catering" style="top: 30%; left: 20%;" data-tooltip="مركز الإعاشة الرئيسي - منى<br>الطاقة: 100,000 وجبة/يوم<br>الإنتاج الحالي: 95,000<br>الحالة: نشط<br>آخر تحديث: منذ دقيقتين">C1</div>
+                                <div class="map-location catering" style="top: 45%; left: 35%;" data-tooltip="مركز الإعاشة الثانوي - منى<br>الطاقة: 75,000 وجبة/يوم<br>الإنتاج الحالي: 72,000<br>الحالة: نشط<br>آخر تحديث: منذ 3 دقائق">C2</div>
+                                <div class="map-location catering" style="top: 55%; left: 45%;" data-tooltip="مركز الإعاشة - عرفات<br>الطاقة: 150,000 وجبة/يوم<br>الإنتاج الحالي: 148,000<br>الحالة: نشط<br>آخر تحديث: منذ دقيقة">C3</div>
+                                <div class="map-location catering" style="top: 20%; left: 65%;" data-tooltip="مركز الإعاشة - مزدلفة<br>الطاقة: 80,000 وجبة/يوم<br>الإنتاج الحالي: 76,000<br>الحالة: نشط<br>آخر تحديث: منذ 5 دقائق">C4</div>
+                                <div class="map-location catering" style="top: 65%; left: 25%;" data-tooltip="مركز الإعاشة المساند - منى<br>الطاقة: 50,000 وجبة/يوم<br>الإنتاج الحالي: 47,000<br>الحالة: نشط<br>آخر تحديث: منذ 6 دقائق">C5</div>
+
+                                <div class="map-tooltip" id="housingMapTooltip"></div>
+                            </div>
+                        </div>
+
+                        <!-- Housing Management Form -->
+                        <div class="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-8 border-2 border-blue-200 card-hover">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                                <svg class="w-6 h-6 text-blue-600 ml-3" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z"/>
+                                </svg>
+                                إدارة الوحدات السكنية
+                            </h3>
+                            <form class="space-y-6" onsubmit="handleHousingFormSubmit(event)">
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-3">المجمع السكني</label>
+                                    <select class="input-focus w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-medium">
+                                        <option>مجمع الإسكان أ - منى</option>
+                                        <option>مجمع الإسكان ب - منى</option>
+                                        <option>مجمع الإسكان ج - عرفات</option>
+                                        <option>مجمع الإسكان د - مزدلفة</option>
+                                        <option>مجمع الإسكان هـ - منى</option>
+                                        <option>مجمع الإسكان و - مزدلفة</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-3">نوع الوحدة</label>
+                                    <select class="input-focus w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-medium">
+                                        <option>خيمة مكيفة - 20 شخص</option>
+                                        <option>خيمة مكيفة - 40 شخص</option>
+                                        <option>مبنى سكني - 100 شخص</option>
+                                        <option>مبنى سكني - 200 شخص</option>
+                                        <option>جناح VIP - 10 أشخاص</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-3">عدد الحجاج</label>
+                                    <input type="number" class="input-focus w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-medium" placeholder="أدخل عدد الحجاج" min="1" max="200">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-3">حالة الوحدة</label>
+                                    <select class="input-focus w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-medium">
+                                        <option>متاحة</option>
+                                        <option>مشغولة</option>
+                                        <option>تحت الصيانة</option>
+                                        <option>خارج الخدمة</option>
+                                        <option>محجوزة</option>
+                                    </select>
+                                </div>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'965bce5a61bcdb6f',t:'MTc1MzYxNTg0MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>

@@ -1,0 +1,1626 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام إدارة الحج المتكامل - تصميم جذاب</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&family=Amiri:wght@400;700&family=Noto+Sans+Arabic:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --warning-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --danger-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --dark-gradient: linear-gradient(135deg, #434343 0%, #000000 100%);
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .arabic-title {
+            font-family: 'Amiri', serif;
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .gradient-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .floating-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .screen {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-button {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tab-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .tab-button:hover::before {
+            left: 100%;
+        }
+
+        .tab-button.active {
+            background: var(--primary-gradient);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary {
+            background: var(--primary-gradient);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--secondary-gradient);
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(240, 147, 251, 0.4);
+        }
+
+        .btn-success {
+            background: var(--success-gradient);
+            transition: all 0.3s ease;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(79, 172, 254, 0.4);
+        }
+
+        .btn-warning {
+            background: var(--warning-gradient);
+            transition: all 0.3s ease;
+        }
+
+        .btn-warning:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(67, 233, 123, 0.4);
+        }
+
+        .btn-danger {
+            background: var(--danger-gradient);
+            transition: all 0.3s ease;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(250, 112, 154, 0.4);
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .icon-bounce {
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 53%, 80%, 100% { transform: translate3d(0,0,0); }
+            40%, 43% { transform: translate3d(0,-30px,0); }
+            70% { transform: translate3d(0,-15px,0); }
+            90% { transform: translate3d(0,-4px,0); }
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            animation: progress-shine 2s infinite;
+        }
+
+        @keyframes progress-shine {
+            0% { background-position: -200px 0; }
+            100% { background-position: calc(200px + 100%) 0; }
+        }
+
+        .islamic-pattern {
+            background-image: 
+                radial-gradient(circle at 25px 25px, rgba(255,255,255,0.1) 2px, transparent 2px),
+                radial-gradient(circle at 75px 75px, rgba(255,255,255,0.1) 2px, transparent 2px);
+            background-size: 100px 100px;
+        }
+
+        .neon-glow {
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .text-gradient {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 280px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(248,250,252,0.95) 100%);
+            backdrop-filter: blur(20px);
+            border-left: 1px solid rgba(102, 126, 234, 0.1);
+            transform: translateX(100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            box-shadow: -10px 0 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar.open {
+            transform: translateX(0);
+        }
+
+        .sidebar.collapsed {
+            width: 80px;
+            transform: translateX(0);
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .sidebar-header {
+            padding: 2rem 1.5rem;
+            border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+        }
+
+        .sidebar-nav {
+            padding: 1rem 0;
+            height: calc(100vh - 120px);
+            overflow-y: auto;
+        }
+
+        .sidebar-nav::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .sidebar-nav::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .sidebar-nav::-webkit-scrollbar-thumb {
+            background: rgba(102, 126, 234, 0.3);
+            border-radius: 2px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            margin: 0.25rem 1rem;
+            border-radius: 12px;
+            color: #64748b;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            transition: right 0.5s;
+        }
+
+        .nav-item:hover::before {
+            right: 100%;
+        }
+
+        .nav-item:hover {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            color: #667eea;
+            transform: translateX(-5px);
+        }
+
+        .nav-item.active {
+            background: var(--primary-gradient);
+            color: white;
+            transform: translateX(-5px);
+            box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+        }
+
+        .nav-item.active::before {
+            display: none;
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            margin-left: 12px;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-item:hover .nav-icon {
+            transform: scale(1.1);
+        }
+
+        .nav-text {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .sidebar.collapsed .nav-text {
+            opacity: 0;
+            transform: translateX(20px);
+        }
+
+        .sidebar.collapsed .nav-item {
+            justify-content: center;
+            padding: 1rem;
+            margin: 0.25rem 0.5rem;
+        }
+
+        .sidebar.collapsed .nav-icon {
+            margin-left: 0;
+        }
+
+        .toggle-btn {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: var(--primary-gradient);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .toggle-btn:hover {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 12px 24px rgba(102, 126, 234, 0.4);
+        }
+
+        .toggle-btn.sidebar-open {
+            right: 300px;
+        }
+
+        .toggle-btn.sidebar-collapsed {
+            right: 100px;
+        }
+
+        .main-content {
+            transition: margin-right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .main-content.sidebar-open {
+            margin-right: 280px;
+        }
+
+        .main-content.sidebar-collapsed {
+            margin-right: 80px;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+            }
+            
+            .sidebar.collapsed {
+                width: 100%;
+                transform: translateX(100%);
+            }
+            
+            .toggle-btn.sidebar-open {
+                right: 20px;
+            }
+            
+            .toggle-btn.sidebar-collapsed {
+                right: 20px;
+            }
+            
+            .main-content.sidebar-open,
+            .main-content.sidebar-collapsed {
+                margin-right: 0;
+            }
+        }
+
+        .status-badge {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .status-badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: badge-shine 3s infinite;
+        }
+
+        @keyframes badge-shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .input-focus {
+            transition: all 0.3s ease;
+        }
+
+        .input-focus:focus {
+            transform: scale(1.02);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            border: 1px solid rgba(102, 126, 234, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .metric-card:hover {
+            border-color: rgba(102, 126, 234, 0.3);
+            box-shadow: 0 20px 25px -5px rgba(102, 126, 234, 0.1);
+        }
+    </style>
+</head>
+<body class="islamic-pattern">
+    <!-- Header with Glass Effect -->
+    <header class="glass-effect text-white shadow-2xl relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-blue-600/20"></div>
+        <div class="container mx-auto px-6 py-6 relative z-10">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-6 space-x-reverse">
+                    <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg floating-animation">
+                        <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2L13.09 8.26L22 9L13.09 9.74L12 16L10.91 9.74L2 9L10.91 8.26L12 2Z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="text-3xl font-black arabic-title text-gradient">نظام إدارة الحج المتكامل</h1>
+                        <p class="text-blue-100 text-lg font-medium">منصة ذكية لإدارة مواسم الحج بكفاءة عالية</p>
+                    </div>
+                </div>
+                <button onclick="showScreen('dashboard')" class="btn-primary text-white px-6 py-3 rounded-xl font-bold shadow-lg">
+                    <svg class="w-5 h-5 inline ml-2" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z"/>
+                    </svg>
+                    العودة للرئيسية
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar Toggle Button -->
+    <button class="toggle-btn" id="sidebarToggle">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z"/>
+        </svg>
+    </button>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Vertical Sidebar Navigation -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center ml-3 floating-animation">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2L13.09 8.26L22 9L13.09 9.74L12 16L10.91 9.74L2 9L10.91 8.26L12 2Z"/>
+                        </svg>
+                    </div>
+                    <div class="nav-text">
+                        <h3 class="text-lg font-bold text-gray-800">نظام الحج</h3>
+                        <p class="text-xs text-gray-500">إدارة متكاملة</p>
+                    </div>
+                </div>
+                <button class="text-gray-400 hover:text-gray-600 nav-text" id="collapseBtn">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="sidebar-nav">
+            <a href="#" class="nav-item active" onclick="showScreen('dashboard')" data-screen="dashboard">
+                <svg class="nav-icon" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z"/>
+                </svg>
+                <span class="nav-text">الرئيسية</span>
+            </a>
+
+            <a href="#" class="nav-item" onclick="showScreen('allocation')" data-screen="allocation">
+                <svg class="nav-icon" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12,2C8.13,2 5,5.13 5,9C5,14.25 12,22 12,22S19,14.25 19,9C19,5.13 15.87,2 12,2Z"/>
+                </svg>
+                <span class="nav-text">إدارة التخصيص</span>
+            </a>
+
+            <a href="#" class="nav-item" onclick="showScreen('contractors')" data-screen="contractors">
+                <svg class="nav-icon" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm4 18v-6h2.5l-2.54-7.63A1.5 1.5 0 0 0 18.54 8H16c-.8 0-1.54.37-2 1l-3 4v7h2v7h3v-7h4z"/>
+                </svg>
+                <span class="nav-text">تأهيل المقاولين</span>
+            </a>
+
+            <a href="#" class="nav-item" onclick="showScreen('licenses')" data-screen="licenses">
+                <svg class="nav-icon" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2Z"/>
+                </svg>
+                <span class="nav-text">التراخيص</span>
+            </a>
+
+            <a href="#" class="nav-item" onclick="showScreen('operations')" data-screen="operations">
+                <svg class="nav-icon" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8Z"/>
+                </svg>
+                <span class="nav-text">تشغيل المواقع</span>
+            </a>
+
+            <a href="#" class="nav-item" onclick="showScreen('housing')" data-screen="housing">
+                <svg class="nav-icon" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z"/>
+                </svg>
+                <span class="nav-text">الإسكان والإعاشة</span>
+            </a>
+
+            <a href="#" class="nav-item" onclick="showScreen('reports-screen')" data-screen="reports-screen">
+                <svg class="nav-icon" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M13,14H11V10H13M13,18H11V16H13M1,21H23L12,2L1,21Z"/>
+                </svg>
+                <span class="nav-text">البلاغات</span>
+            </a>
+
+            <a href="#" class="nav-item" onclick="showScreen('documents')" data-screen="documents">
+                <svg class="nav-icon" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M6,2A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2H6Z"/>
+                </svg>
+                <span class="nav-text">الوثائق</span>
+            </a>
+
+            <a href="#" class="nav-item" onclick="showScreen('users')" data-screen="users">
+                <svg class="nav-icon" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M16,4C16.88,4 17.67,4.38 18.18,5L20.5,2.69L21.81,4L19.5,6.31C19.81,6.81 20,7.39 20,8A4,4 0 0,1 16,12A4,4 0 0,1 12,8A4,4 0 0,1 16,4Z"/>
+                </svg>
+                <span class="nav-text">المستخدمين</span>
+            </a>
+
+            <a href="#" class="nav-item" onclick="showScreen('analytics')" data-screen="analytics">
+                <svg class="nav-icon" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M22,21H2V3H4V19H6V10H10V19H12V6H16V19H18V14H22V21Z"/>
+                </svg>
+                <span class="nav-text">التقارير</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <div class="main-content" id="mainContent">
+        <!-- Dashboard Screen (Default) -->
+        <div id="dashboard" class="screen active">
+        <div class="container mx-auto px-6">
+            <div class="text-center py-16">
+                <div class="w-32 h-32 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-8 shadow-2xl floating-animation">
+                    <svg class="w-16 h-16 text-white icon-bounce" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2L13.09 8.26L22 9L13.09 9.74L12 16L10.91 9.74L2 9L10.91 8.26L12 2Z"/>
+                    </svg>
+                </div>
+                <h2 class="text-5xl font-black text-white arabic-title mb-6 drop-shadow-lg">مرحباً بك في نظام إدارة الحج المتكامل</h2>
+                <p class="text-xl text-blue-100 mb-12 font-medium">اختر من الأعلى الوحدة التي تريد الوصول إليها لبدء العمل</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <div class="metric-card rounded-2xl p-8 text-center card-hover">
+                        <div class="w-20 h-20 bg-gradient-to-br from-emerald-400 to-cyan-400 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+                            <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12,2C8.13,2 5,5.13 5,9C5,14.25 12,22 12,22S19,14.25 19,9C19,5.13 15.87,2 12,2Z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-4xl font-black text-gray-800 mb-3">1,247</h3>
+                        <p class="text-gray-600 text-lg font-medium">إجمالي المواقع</p>
+                        <div class="mt-4 bg-emerald-100 rounded-full h-2">
+                            <div class="progress-bar h-2 rounded-full" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card rounded-2xl p-8 text-center card-hover">
+                        <div class="w-20 h-20 bg-gradient-to-br from-blue-400 to-purple-500 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+                            <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm4 18v-6h2.5l-2.54-7.63A1.5 1.5 0 0 0 18.54 8H16c-.8 0-1.54.37-2 1l-3 4v7h2v7h3v-7h4z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-4xl font-black text-gray-800 mb-3">89</h3>
+                        <p class="text-gray-600 text-lg font-medium">المقاولين المؤهلين</p>
+                        <div class="mt-4 bg-blue-100 rounded-full h-2">
+                            <div class="progress-bar h-2 rounded-full" style="width: 92%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card rounded-2xl p-8 text-center card-hover">
+                        <div class="w-20 h-20 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+                            <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2Z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-4xl font-black text-gray-800 mb-3">456</h3>
+                        <p class="text-gray-600 text-lg font-medium">التراخيص الصادرة</p>
+                        <div class="mt-4 bg-yellow-100 rounded-full h-2">
+                            <div class="progress-bar h-2 rounded-full" style="width: 78%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                    <button onclick="showScreen('allocation')" class="btn-primary text-white p-6 rounded-2xl font-bold shadow-xl">
+                        <svg class="w-8 h-8 mx-auto mb-3" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12,2C8.13,2 5,5.13 5,9C5,14.25 12,22 12,22S19,14.25 19,9C19,5.13 15.87,2 12,2Z"/>
+                        </svg>
+                        إدارة المواقع
+                    </button>
+                    
+                    <button onclick="showScreen('contractors')" class="btn-secondary text-white p-6 rounded-2xl font-bold shadow-xl">
+                        <svg class="w-8 h-8 mx-auto mb-3" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm4 18v-6h2.5l-2.54-7.63A1.5 1.5 0 0 0 18.54 8H16c-.8 0-1.54.37-2 1l-3 4v7h2v7h3v-7h4z"/>
+                        </svg>
+                        المقاولين
+                    </button>
+                    
+                    <button onclick="showScreen('reports-screen')" class="btn-warning text-white p-6 rounded-2xl font-bold shadow-xl">
+                        <svg class="w-8 h-8 mx-auto mb-3" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M13,14H11V10H13M13,18H11V16H13M1,21H23L12,2L1,21Z"/>
+                        </svg>
+                        البلاغات
+                    </button>
+                    
+                    <button onclick="showScreen('analytics')" class="btn-success text-white p-6 rounded-2xl font-bold shadow-xl">
+                        <svg class="w-8 h-8 mx-auto mb-3" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M22,21H2V3H4V19H6V10H10V19H12V6H16V19H18V14H22V21Z"/>
+                        </svg>
+                        التقارير
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Site Allocation Management Screen -->
+    <div id="allocation" class="screen">
+        <div class="container mx-auto px-6">
+            <div class="gradient-card rounded-2xl shadow-2xl p-8 mb-8">
+                <h2 class="text-4xl font-black text-gray-800 arabic-title mb-8 flex items-center">
+                    <div class="w-12 h-12 bg-gradient-to-br from-emerald-400 to-cyan-400 rounded-xl flex items-center justify-center ml-4 shadow-lg">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12,2C8.13,2 5,5.13 5,9C5,14.25 12,22 12,22S19,14.25 19,9C19,5.13 15.87,2 12,2Z"/>
+                        </svg>
+                    </div>
+                    إدارة التخصيص والمواقع
+                </h2>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+                    <!-- Upload Ministry Allocation -->
+                    <div class="bg-gradient-to-br from-emerald-50 to-cyan-50 rounded-2xl p-8 border-2 border-emerald-200 card-hover">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                            <svg class="w-6 h-6 text-emerald-600 ml-3" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z"/>
+                            </svg>
+                            رفع تخصيص الوزارة
+                        </h3>
+                        <div class="bg-gradient-to-br from-white to-emerald-50 rounded-2xl p-8 text-center mb-6 border-2 border-dashed border-emerald-300 transition-all duration-300 hover:border-emerald-500">
+                            <div class="w-20 h-20 bg-gradient-to-br from-emerald-400 to-cyan-400 rounded-2xl flex items-center justify-center mx-auto mb-6 floating-animation">
+                                <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                                </svg>
+                            </div>
+                            <p class="text-gray-700 mb-6 text-lg font-medium">اسحب وأفلت خريطة التخصيص هنا</p>
+                            <button class="btn-success text-white px-8 py-4 rounded-xl font-bold shadow-lg">
+                                <svg class="w-5 h-5 inline ml-2" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                                </svg>
+                                اختيار ملف
+                            </button>
+                        </div>
+                        <div class="text-sm text-gray-600 bg-white rounded-xl p-4">
+                            <p class="font-medium mb-2">الملفات المدعومة:</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-xs font-medium">PDF</span>
+                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-medium">DWG</span>
+                                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">SHP</span>
+                            </div>
+                            <p class="mt-2 text-xs">الحد الأقصى: 50 ميجابايت</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Mission Requests -->
+                    <div class="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-8 border-2 border-blue-200 card-hover">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                            <svg class="w-6 h-6 text-blue-600 ml-3" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17M11,9H13V7H11V9Z"/>
+                            </svg>
+                            طلبات البعثات
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="bg-white rounded-2xl p-6 border border-blue-200 card-hover">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <div class="w-12 h-12 bg-gradient-to-br from-green-400 to-blue-500 rounded-xl flex items-center justify-center ml-4">
+                                            <span class="text-white font-bold text-sm">ID</span>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-bold text-gray-800 text-lg">بعثة إندونيسيا</h4>
+                                            <p class="text-gray-600">المنطقة المطلوبة: منى - القطاع أ</p>
+                                        </div>
+                                    </div>
+                                    <span class="status-badge bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-4 py-2 rounded-full text-sm font-bold">قيد المراجعة</span>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white rounded-2xl p-6 border border-blue-200 card-hover">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <div class="w-12 h-12 bg-gradient-to-br from-purple-400 to-pink-500 rounded-xl flex items-center justify-center ml-4">
+                                            <span class="text-white font-bold text-sm">MY</span>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-bold text-gray-800 text-lg">بعثة ماليزيا</h4>
+                                            <p class="text-gray-600">المنطقة المطلوبة: منى - القطاع ب</p>
+                                        </div>
+                                    </div>
+                                    <span class="status-badge bg-gradient-to-r from-green-400 to-emerald-500 text-white px-4 py-2 rounded-full text-sm font-bold">موافق عليه</span>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white rounded-2xl p-6 border border-blue-200 card-hover">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <div class="w-12 h-12 bg-gradient-to-br from-red-400 to-pink-500 rounded-xl flex items-center justify-center ml-4">
+                                            <span class="text-white font-bold text-sm">TR</span>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-bold text-gray-800 text-lg">بعثة تركيا</h4>
+                                            <p class="text-gray-600">المنطقة المطلوبة: عرفات - القطاع ج</p>
+                                        </div>
+                                    </div>
+                                    <span class="status-badge bg-gradient-to-r from-red-400 to-pink-500 text-white px-4 py-2 rounded-full text-sm font-bold">مرفوض</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Site Analysis -->
+                <div class="bg-gradient-to-br from-gray-50 to-blue-50 rounded-2xl p-8 border border-gray-200">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                        <svg class="w-6 h-6 text-purple-600 ml-3" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,5V19H5V5H19Z"/>
+                        </svg>
+                        تحليل الموقع وتوزيع البيانات
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-white rounded-2xl p-6 shadow-lg card-hover">
+                            <h4 class="font-bold text-gray-800 mb-4 text-lg flex items-center">
+                                <div class="w-8 h-8 bg-gradient-to-br from-blue-400 to-cyan-400 rounded-lg flex items-center justify-center ml-3">
+                                    <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+                                    </svg>
+                                </div>
+                                البنية التحتية
+                            </h4>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600">المياه:</span>
+                                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-bold">متوفر</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600">الكهرباء:</span>
+                                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-bold">متوفر</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600">الصرف الصحي:</span>
+                                    <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-bold">جاري التركيب</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-2xl p-6 shadow-lg card-hover">
+                            <h4 class="font-bold text-gray-800 mb-4 text-lg flex items-center">
+                                <div class="w-8 h-8 bg-gradient-to-br from-purple-400 to-pink-400 rounded-lg flex items-center justify-center ml-3">
+                                    <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+                                    </svg>
+                                </div>
+                                المساحة والسعة
+                            </h4>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600">المساحة الإجمالية:</span>
+                                    <span class="font-bold text-purple-600">15,000 م²</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600">السعة المتوقعة:</span>
+                                    <span class="font-bold text-purple-600">2,500 حاج</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600">عدد الخيام:</span>
+                                    <span class="font-bold text-purple-600">125 خيمة</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-2xl p-6 shadow-lg card-hover">
+                            <h4 class="font-bold text-gray-800 mb-4 text-lg flex items-center">
+                                <div class="w-8 h-8 bg-gradient-to-br from-orange-400 to-red-400 rounded-lg flex items-center justify-center ml-3">
+                                    <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+                                    </svg>
+                                </div>
+                                الخدمات
+                            </h4>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600">دورات المياه:</span>
+                                    <span class="font-bold text-orange-600">50 وحدة</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600">المطابخ:</span>
+                                    <span class="font-bold text-orange-600">5 مطابخ</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600">البوابات:</span>
+                                    <span class="font-bold text-orange-600">8 بوابات</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contractors Management Screen -->
+    <div id="contractors" class="screen">
+        <div class="container mx-auto px-6">
+            <div class="gradient-card rounded-2xl shadow-2xl p-8">
+                <h2 class="text-4xl font-black text-gray-800 arabic-title mb-8 flex items-center">
+                    <div class="w-12 h-12 bg-gradient-to-br from-blue-400 to-purple-500 rounded-xl flex items-center justify-center ml-4 shadow-lg">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm4 18v-6h2.5l-2.54-7.63A1.5 1.5 0 0 0 18.54 8H16c-.8 0-1.54.37-2 1l-3 4v7h2v7h3v-7h4z"/>
+                        </svg>
+                    </div>
+                    إدارة تأهيل المقاولين
+                </h2>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+                    <!-- Contractor Classification -->
+                    <div class="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-8 border-2 border-blue-200 card-hover">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                            <svg class="w-6 h-6 text-blue-600 ml-3" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17M11,9H13V7H11V9Z"/>
+                            </svg>
+                            التأهيل الفني والتصنيف
+                        </h3>
+                        <form class="space-y-6">
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-3">اسم المقاول</label>
+                                <input type="text" class="input-focus w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-medium" placeholder="أدخل اسم المقاول">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-3">التصنيف</label>
+                                <select class="input-focus w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-medium">
+                                    <option>الدرجة الأولى</option>
+                                    <option>الدرجة الثانية</option>
+                                    <option>الدرجة الثالثة</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-3">التخصص</label>
+                                <select class="input-focus w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-blue-100 focus:border-blue-500 font-medium">
+                                    <option>إنشاء الخيام</option>
+                                    <option>الكهرباء والإنارة</option>
+                                    <option>السباكة والصرف</option>
+                                    <option>التكييف والتهوية</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn-primary w-full text-white py-4 px-6 rounded-xl font-bold shadow-xl">
+                                <svg class="w-5 h-5 inline ml-2" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M17,12C17,10.89 16.1,10 15,10H13V8A4,4 0 0,0 9,4A4,4 0 0,0 5,8V10H3C1.89,10 1,10.89 1,12V20A2,2 0 0,0 3,22H15A2,2 0 0,0 17,20V12M7,8A2,2 0 0,1 9,6A2,2 0 0,1 11,8V10H7V8Z"/>
+                                </svg>
+                                حفظ التأهيل
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Qualified Contractors -->
+                    <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-8 border-2 border-green-200 card-hover">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                            <svg class="w-6 h-6 text-green-600 ml-3" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/>
+                            </svg>
+                            المقاولين المؤهلين
+                        </h3>
+                        <div class="space-y-4 max-h-96 overflow-y-auto">
+                            <div class="bg-white rounded-2xl p-6 border border-green-200 card-hover">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <div class="w-12 h-12 bg-gradient-to-br from-green-400 to-emerald-500 rounded-xl flex items-center justify-center ml-4">
+                                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-bold text-gray-800 text-lg">شركة البناء المتقدم</h4>
+                                            <p class="text-gray-600 font-medium">التصنيف: الدرجة الأولى - إنشاء الخيام</p>
+                                            <p class="text-gray-500 text-sm">تاريخ التأهيل: 2024/01/15</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-left">
+                                        <span class="status-badge bg-gradient-to-r from-green-400 to-emerald-500 text-white px-4 py-2 rounded-full text-sm font-bold">مؤهل</span>
+                                        <div class="mt-3">
+                                            <div class="flex items-center">
+                                                <span class="text-yellow-400 text-lg">★★★★★</span>
+                                                <span class="text-gray-600 text-sm font-medium mr-2">(4.8)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white rounded-2xl p-6 border border-green-200 card-hover">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <div class="w-12 h-12 bg-gradient-to-br from-blue-400 to-purple-500 rounded-xl flex items-center justify-center ml-4">
+                                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-bold text-gray-800 text-lg">مؤسسة الكهرباء الحديثة</h4>
+                                            <p class="text-gray-600 font-medium">التصنيف: الدرجة الثانية - الكهرباء والإنارة</p>
+                                            <p class="text-gray-500 text-sm">تاريخ التأهيل: 2024/01/20</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-left">
+                                        <span class="status-badge bg-gradient-to-r from-green-400 to-emerald-500 text-white px-4 py-2 rounded-full text-sm font-bold">مؤهل</span>
+                                        <div class="mt-3">
+                                            <div class="flex items-center">
+                                                <span class="text-yellow-400 text-lg">★★★★☆</span>
+                                                <span class="text-gray-600 text-sm font-medium mr-2">(4.2)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bid Analysis -->
+                <div class="bg-gradient-to-br from-gray-50 to-blue-50 rounded-2xl p-8 border border-gray-200">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                        <svg class="w-6 h-6 text-purple-600 ml-3" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,5V19H5V5H19Z"/>
+                        </svg>
+                        تحليل العروض المالية والفنية
+                    </h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full bg-white rounded-2xl overflow-hidden shadow-lg">
+                            <thead class="bg-gradient-to-r from-gray-100 to-blue-100">
+                                <tr>
+                                    <th class="px-6 py-4 text-right text-sm font-bold text-gray-700">المقاول</th>
+                                    <th class="px-6 py-4 text-right text-sm font-bold text-gray-700">العرض المالي</th>
+                                    <th class="px-6 py-4 text-right text-sm font-bold text-gray-700">التقييم الفني</th>
+                                    <th class="px-6 py-4 text-right text-sm font-bold text-gray-700">مدة التنفيذ</th>
+                                    <th class="px-6 py-4 text-right text-sm font-bold text-gray-700">الحالة</th>
+                                    <th class="px-6 py-4 text-right text-sm font-bold text-gray-700">الإجراء</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="px-6 py-4 text-sm font-bold text-gray-900">شركة البناء المتقدم</td>
+                                    <td class="px-6 py-4 text-sm font-bold text-green-600">2,500,000 ريال</td>
+                                    <td class="px-6 py-4 text-sm">
+                                        <div class="flex items-center">
+                                            <span class="text-yellow-400 text-lg">★★★★★</span>
+                                            <span class="text-gray-600 font-bold mr-2">(95%)</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm font-bold text-gray-900">30 يوم</td>
+                                    <td class="px-6 py-4">
+                                        <span class="status-badge bg-gradient-to-r from-green-400 to-emerald-500 text-white px-4 py-2 rounded-full text-sm font-bold">مقبول</span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <button class="btn-primary text-white px-6 py-2 rounded-xl text-sm font-bold shadow-lg">
+                                            تسليم الموقع
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="px-6 py-4 text-sm font-bold text-gray-900">مؤسسة الإنشاءات السريعة</td>
+                                    <td class="px-6 py-4 text-sm font-bold text-blue-600">2,200,000 ريال</td>
+                                    <td class="px-6 py-4 text-sm">
+                                        <div class="flex items-center">
+                                            <span class="text-yellow-400 text-lg">★★★☆☆</span>
+                                            <span class="text-gray-600 font-bold mr-2">(78%)</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm font-bold text-gray-900">45 يوم</td>
+                                    <td class="px-6 py-4">
+                                        <span class="status-badge bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-4 py-2 rounded-full text-sm font-bold">قيد المراجعة</span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <button class="bg-gray-400 text-white px-6 py-2 rounded-xl text-sm font-bold cursor-not-allowed">
+                                            في الانتظار
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Continue with other screens... (I'll add a few more key screens) -->
+
+    <!-- Reports Screen -->
+    <div id="reports-screen" class="screen">
+        <div class="container mx-auto px-6">
+            <div class="gradient-card rounded-2xl shadow-2xl p-8">
+                <h2 class="text-4xl font-black text-gray-800 arabic-title mb-8 flex items-center">
+                    <div class="w-12 h-12 bg-gradient-to-br from-red-400 to-pink-500 rounded-xl flex items-center justify-center ml-4 shadow-lg">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M13,14H11V10H13M13,18H11V16H13M1,21H23L12,2L1,21Z"/>
+                        </svg>
+                    </div>
+                    التبليغ والملاحظات الميدانية
+                </h2>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Report Form -->
+                    <div class="bg-gradient-to-br from-red-50 to-pink-50 rounded-2xl p-8 border-2 border-red-200 card-hover">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                            <svg class="w-6 h-6 text-red-600 ml-3" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17M11,9H13V7H11V9Z"/>
+                            </svg>
+                            إرسال بلاغ جديد
+                        </h3>
+                        <form class="space-y-6">
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-3">نوع البلاغ</label>
+                                <select class="input-focus w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 font-medium">
+                                    <option>ملاحظة ميدانية</option>
+                                    <option>شكوى</option>
+                                    <option>حادث</option>
+                                    <option>وفاة</option>
+                                    <option>عطل فني</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-3">الموقع</label>
+                                <select class="input-focus w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 font-medium">
+                                    <option>منى - القطاع أ</option>
+                                    <option>عرفات - القطاع ب</option>
+                                    <option>مزدلفة - القطاع ج</option>
+                                    <option>الحرم المكي</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-3">الأولوية</label>
+                                <select class="input-focus w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 font-medium">
+                                    <option>عادية</option>
+                                    <option>متوسطة</option>
+                                    <option>عالية</option>
+                                    <option>طارئة</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-3">وصف البلاغ</label>
+                                <textarea rows="4" class="input-focus w-full p-4 border-2 border-gray-200 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 font-medium" placeholder="اكتب تفاصيل البلاغ هنا..."></textarea>
+                            </div>
+                            <button type="submit" class="btn-danger w-full text-white py-4 px-6 rounded-xl font-bold shadow-xl">
+                                <svg class="w-5 h-5 inline ml-2" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"/>
+                                </svg>
+                                إرسال البلاغ
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Reports List -->
+                    <div class="bg-gradient-to-br from-gray-50 to-blue-50 rounded-2xl p-8 border-2 border-gray-200 card-hover">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                            <svg class="w-6 h-6 text-blue-600 ml-3" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,5V19H5V5H19Z"/>
+                            </svg>
+                            البلاغات الأخيرة
+                        </h3>
+                        <div class="space-y-4 max-h-96 overflow-y-auto">
+                            <div class="bg-white rounded-2xl p-6 border-r-4 border-red-500 card-hover">
+                                <div class="flex items-center justify-between mb-3">
+                                    <h4 class="font-bold text-gray-800 text-lg">عطل في نظام المياه</h4>
+                                    <span class="status-badge bg-gradient-to-r from-red-400 to-pink-500 text-white px-4 py-2 rounded-full text-sm font-bold pulse-animation">طارئ</span>
+                                </div>
+                                <p class="text-gray-600 mb-2 font-medium">الموقع: منى - القطاع أ - الموقع 125</p>
+                                <p class="text-gray-600 mb-3">انقطاع في إمداد المياه للخيام 50-75</p>
+                                <div class="flex items-center justify-between text-xs text-gray-500 mb-4">
+                                    <span class="font-medium">منذ 15 دقيقة</span>
+                                    <span class="font-bold">البلاغ #2024001</span>
+                                </div>
+                                <div class="flex space-x-3 space-x-reverse">
+                                    <button class="btn-primary text-white px-4 py-2 rounded-xl text-sm font-bold shadow-lg">
+                                        متابعة
+                                    </button>
+                                    <button class="btn-success text-white px-4 py-2 rounded-xl text-sm font-bold shadow-lg">
+                                        حل
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="bg-white rounded-2xl p-6 border-r-4 border-yellow-500 card-hover">
+                                <div class="flex items-center justify-between mb-3">
+                                    <h4 class="font-bold text-gray-800 text-lg">ملاحظة على النظافة</h4>
+                                    <span class="status-badge bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-4 py-2 rounded-full text-sm font-bold">متوسط</span>
+                                </div>
+                                <p class="text-gray-600 mb-2 font-medium">الموقع: عرفات - القطاع ب - الموقع 89</p>
+                                <p class="text-gray-600 mb-3">تراكم النفايات في المنطقة الشرقية</p>
+                                <div class="flex items-center justify-between text-xs text-gray-500 mb-4">
+                                    <span class="font-medium">منذ ساعة</span>
+                                    <span class="font-bold">البلاغ #2024002</span>
+                                </div>
+                                <div>
+                                    <span class="status-badge bg-gradient-to-r from-blue-400 to-purple-500 text-white px-4 py-2 rounded-full text-sm font-bold">قيد المعالجة</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analytics Screen -->
+    <div id="analytics" class="screen">
+        <div class="container mx-auto px-6">
+            <div class="gradient-card rounded-2xl shadow-2xl p-8">
+                <h2 class="text-4xl font-black text-gray-800 arabic-title mb-8 flex items-center">
+                    <div class="w-12 h-12 bg-gradient-to-br from-green-400 to-emerald-500 rounded-xl flex items-center justify-center ml-4 shadow-lg">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M22,21H2V3H4V19H6V10H10V19H12V6H16V19H18V14H22V21Z"/>
+                        </svg>
+                    </div>
+                    مؤشرات الأداء والتقارير
+                </h2>
+
+                <!-- KPI Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+                    <div class="metric-card rounded-2xl p-8 border-2 border-emerald-200 card-hover">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-emerald-600 text-sm font-bold mb-2">معدل الإنجاز</p>
+                                <p class="text-4xl font-black text-emerald-700 mb-2">87.5%</p>
+                                <p class="text-emerald-600 text-sm font-medium">+5.2% من الشهر الماضي</p>
+                            </div>
+                            <div class="w-16 h-16 bg-gradient-to-br from-emerald-400 to-cyan-400 rounded-2xl flex items-center justify-center floating-animation">
+                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="mt-4 bg-emerald-100 rounded-full h-3">
+                            <div class="progress-bar h-3 rounded-full" style="width: 87.5%"></div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card rounded-2xl p-8 border-2 border-blue-200 card-hover">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-blue-600 text-sm font-bold mb-2">رضا المستفيدين</p>
+                                <p class="text-4xl font-black text-blue-700 mb-2">4.6/5</p>
+                                <p class="text-blue-600 text-sm font-medium">+0.3 من التقييم السابق</p>
+                            </div>
+                            <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-purple-500 rounded-2xl flex items-center justify-center floating-animation">
+                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.46,13.97L5.82,21L12,17.27Z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex">
+                            <span class="text-yellow-400 text-2xl">★★★★★</span>
+                        </div>
+                    </div>
+
+                    <div class="metric-card rounded-2xl p-8 border-2 border-yellow-200 card-hover">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-yellow-600 text-sm font-bold mb-2">الوقت المتوسط للحل</p>
+                                <p class="text-4xl font-black text-yellow-700 mb-2">2.4 ساعة</p>
+                                <p class="text-yellow-600 text-sm font-medium">-0.8 ساعة تحسن</p>
+                            </div>
+                            <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl flex items-center justify-center floating-animation">
+                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M16.2,16.2L11,13V7H12.5V12.2L17,14.9L16.2,16.2Z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="mt-4 bg-yellow-100 rounded-full h-3">
+                            <div class="progress-bar h-3 rounded-full" style="width: 65%"></div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card rounded-2xl p-8 border-2 border-purple-200 card-hover">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-purple-600 text-sm font-bold mb-2">التوفير في التكاليف</p>
+                                <p class="text-4xl font-black text-purple-700 mb-2">15.2%</p>
+                                <p class="text-purple-600 text-sm font-medium">مقارنة بالعام الماضي</p>
+                            </div>
+                            <div class="w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-500 rounded-2xl flex items-center justify-center floating-animation">
+                                <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M7,15H9C9,16.08 10.37,17 12,17C13.63,17 15,16.08 15,15C15,13.9 13.96,13.5 11.76,12.97C9.64,12.44 7,11.78 7,9C7,7.21 8.47,5.69 10.5,5.18V3H13.5V5.18C15.53,5.69 17,7.21 17,9H15C15,7.92 13.63,7 12,7C10.37,7 9,7.92 9,9C9,10.1 10.04,10.5 12.24,11.03C14.36,11.56 17,12.22 17,15C17,16.79 15.53,18.31 13.5,18.82V21H10.5V18.82C8.47,18.31 7,16.79 7,15Z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="mt-4 bg-purple-100 rounded-full h-3">
+                            <div class="progress-bar h-3 rounded-full" style="width: 15.2%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Export Options -->
+                <div class="bg-gradient-to-br from-gray-50 to-blue-50 rounded-2xl p-8 border border-gray-200">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                        <svg class="w-6 h-6 text-green-600 ml-3" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                        </svg>
+                        تصدير التقارير
+                    </h3>
+                    
+                    <div class="flex space-x-4 space-x-reverse">
+                        <button class="btn-success text-white px-8 py-4 rounded-xl font-bold shadow-xl">
+                            <svg class="w-5 h-5 inline ml-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                            </svg>
+                            تصدير التقرير
+                        </button>
+                        <button class="btn-primary text-white px-8 py-4 rounded-xl font-bold shadow-xl">
+                            <svg class="w-5 h-5 inline ml-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17M11,9H13V7H11V9Z"/>
+                            </svg>
+                            معاينة التقرير
+                        </button>
+                        <button class="btn-secondary text-white px-8 py-4 rounded-xl font-bold shadow-xl">
+                            <svg class="w-5 h-5 inline ml-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M18,3H6V7H18M19,12A1,1 0 0,1 18,11H6A1,1 0 0,1 5,12V19A1,1 0 0,1 6,20H18A1,1 0 0,1 19,19M8,15H16V17H8"/>
+                            </svg>
+                            طباعة
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add remaining screens with similar styling... -->
+    <div id="licenses" class="screen">
+        <div class="container mx-auto px-6">
+            <div class="text-center py-20">
+                <div class="w-32 h-32 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-8 shadow-2xl floating-animation">
+                    <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2Z"/>
+                    </svg>
+                </div>
+                <h2 class="text-4xl font-black text-white arabic-title mb-6">شاشة التراخيص والشهادات</h2>
+                <p class="text-xl text-blue-100 mb-8">قيد التطوير - سيتم إضافة المحتوى قريباً</p>
+                <button onclick="showScreen('dashboard')" class="btn-primary text-white px-8 py-4 rounded-xl font-bold shadow-xl">
+                    العودة للرئيسية
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="operations" class="screen">
+        <div class="container mx-auto px-6">
+            <div class="text-center py-20">
+                <div class="w-32 h-32 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-8 shadow-2xl floating-animation">
+                    <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,8A4,4 0 0,1 16,12A4,4 0 0,1 12,16A4,4 0 0,1 8,12A4,4 0 0,1 12,8Z"/>
+                    </svg>
+                </div>
+                <h2 class="text-4xl font-black text-white arabic-title mb-6">شاشة تشغيل المواقع</h2>
+                <p class="text-xl text-blue-100 mb-8">قيد التطوير - سيتم إضافة المحتوى قريباً</p>
+                <button onclick="showScreen('dashboard')" class="btn-primary text-white px-8 py-4 rounded-xl font-bold shadow-xl">
+                    العودة للرئيسية
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="housing" class="screen">
+        <div class="container mx-auto px-6">
+            <div class="text-center py-20">
+                <div class="w-32 h-32 bg-gradient-to-br from-indigo-400 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-8 shadow-2xl floating-animation">
+                    <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z"/>
+                    </svg>
+                </div>
+                <h2 class="text-4xl font-black text-white arabic-title mb-6">شاشة الإسكان والإعاشة</h2>
+                <p class="text-xl text-blue-100 mb-8">قيد التطوير - سيتم إضافة المحتوى قريباً</p>
+                <button onclick="showScreen('dashboard')" class="btn-primary text-white px-8 py-4 rounded-xl font-bold shadow-xl">
+                    العودة للرئيسية
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="documents" class="screen">
+        <div class="container mx-auto px-6">
+            <div class="text-center py-20">
+                <div class="w-32 h-32 bg-gradient-to-br from-teal-400 to-cyan-500 rounded-full flex items-center justify-center mx-auto mb-8 shadow-2xl floating-animation">
+                    <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6,2A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2H6Z"/>
+                    </svg>
+                </div>
+                <h2 class="text-4xl font-black text-white arabic-title mb-6">شاشة إدارة الوثائق</h2>
+                <p class="text-xl text-blue-100 mb-8">قيد التطوير - سيتم إضافة المحتوى قريباً</p>
+                <button onclick="showScreen('dashboard')" class="btn-primary text-white px-8 py-4 rounded-xl font-bold shadow-xl">
+                    العودة للرئيسية
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="users" class="screen">
+        <div class="container mx-auto px-6">
+            <div class="text-center py-20">
+                <div class="w-32 h-32 bg-gradient-to-br from-gray-400 to-gray-600 rounded-full flex items-center justify-center mx-auto mb-8 shadow-2xl floating-animation">
+                    <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M16,4C16.88,4 17.67,4.38 18.18,5L20.5,2.69L21.81,4L19.5,6.31C19.81,6.81 20,7.39 20,8A4,4 0 0,1 16,12A4,4 0 0,1 12,8A4,4 0 0,1 16,4Z"/>
+                    </svg>
+                </div>
+                <h2 class="text-4xl font-black text-white arabic-title mb-6">شاشة إدارة المستخدمين</h2>
+                <p class="text-xl text-blue-100 mb-8">قيد التطوير - سيتم إضافة المحتوى قريباً</p>
+                <button onclick="showScreen('dashboard')" class="btn-primary text-white px-8 py-4 rounded-xl font-bold shadow-xl">
+                    العودة للرئيسية
+                </button>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        // Sidebar state management
+        let sidebarState = 'closed'; // 'closed', 'open', 'collapsed'
+
+        function showScreen(screenId) {
+            // Hide all screens
+            const screens = document.querySelectorAll('.screen');
+            screens.forEach(screen => {
+                screen.classList.remove('active');
+            });
+
+            // Show selected screen
+            document.getElementById(screenId).classList.add('active');
+
+            // Update nav items
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Find and activate the corresponding nav item
+            const activeItem = document.querySelector(`[data-screen="${screenId}"]`);
+            if (activeItem) {
+                activeItem.classList.add('active');
+            }
+
+            // Auto-close sidebar on mobile after selection
+            if (window.innerWidth <= 768 && sidebarState === 'open') {
+                closeSidebar();
+            }
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const toggleBtn = document.getElementById('sidebarToggle');
+            const mainContent = document.getElementById('mainContent');
+
+            if (sidebarState === 'closed') {
+                openSidebar();
+            } else if (sidebarState === 'open') {
+                if (window.innerWidth > 768) {
+                    collapseSidebar();
+                } else {
+                    closeSidebar();
+                }
+            } else if (sidebarState === 'collapsed') {
+                openSidebar();
+            }
+        }
+
+        function openSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const toggleBtn = document.getElementById('sidebarToggle');
+            const mainContent = document.getElementById('mainContent');
+
+            sidebar.classList.remove('collapsed');
+            sidebar.classList.add('open');
+            toggleBtn.classList.remove('sidebar-collapsed');
+            toggleBtn.classList.add('sidebar-open');
+            
+            if (window.innerWidth > 768) {
+                mainContent.classList.add('sidebar-open');
+                mainContent.classList.remove('sidebar-collapsed');
+            } else {
+                overlay.classList.add('active');
+            }
+
+            // Update toggle button icon
+            toggleBtn.innerHTML = `
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+                </svg>
+            `;
+
+            sidebarState = 'open';
+        }
+
+        function collapseSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const toggleBtn = document.getElementById('sidebarToggle');
+            const mainContent = document.getElementById('mainContent');
+
+            sidebar.classList.remove('open');
+            sidebar.classList.add('collapsed');
+            toggleBtn.classList.remove('sidebar-open');
+            toggleBtn.classList.add('sidebar-collapsed');
+            mainContent.classList.remove('sidebar-open');
+            mainContent.classList.add('sidebar-collapsed');
+
+            // Update toggle button icon
+            toggleBtn.innerHTML = `
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z"/>
+                </svg>
+            `;
+
+            sidebarState = 'collapsed';
+        }
+
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const toggleBtn = document.getElementById('sidebarToggle');
+            const mainContent = document.getElementById('mainContent');
+
+            sidebar.classList.remove('open', 'collapsed');
+            overlay.classList.remove('active');
+            toggleBtn.classList.remove('sidebar-open', 'sidebar-collapsed');
+            mainContent.classList.remove('sidebar-open', 'sidebar-collapsed');
+
+            // Update toggle button icon
+            toggleBtn.innerHTML = `
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z"/>
+                </svg>
+            `;
+
+            sidebarState = 'closed';
+        }
+
+        // Add interactive functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sidebar event listeners
+            document.getElementById('sidebarToggle').addEventListener('click', toggleSidebar);
+            document.getElementById('collapseBtn').addEventListener('click', function() {
+                if (sidebarState === 'open') {
+                    collapseSidebar();
+                }
+            });
+            document.getElementById('sidebarOverlay').addEventListener('click', closeSidebar);
+
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth <= 768 && sidebarState === 'collapsed') {
+                    closeSidebar();
+                }
+            });
+
+            // Prevent nav item clicks from bubbling
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                });
+            });
+            // Add click handlers for all buttons
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(button => {
+                if (!button.onclick && !button.classList.contains('tab-button')) {
+                    button.addEventListener('click', function() {
+                        // Simulate loading for action buttons
+                        if (this.textContent.includes('تقديم') || 
+                            this.textContent.includes('حفظ') || 
+                            this.textContent.includes('إرسال') ||
+                            this.textContent.includes('تصدير')) {
+                            
+                            const originalText = this.textContent;
+                            this.innerHTML = '<svg class="animate-spin w-5 h-5 text-white inline ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>جاري المعالجة...';
+                            
+                            setTimeout(() => {
+                                this.innerHTML = originalText;
+                                
+                                // Show success message
+                                const successMsg = document.createElement('div');
+                                successMsg.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+                                successMsg.innerHTML = '<svg class="w-5 h-5 inline ml-2" fill="currentColor" viewBox="0 0 24 24"><path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/></svg>تم بنجاح!';
+                                document.body.appendChild(successMsg);
+                                
+                                setTimeout(() => {
+                                    successMsg.remove();
+                                }, 3000);
+                            }, 2000);
+                        }
+                    });
+                }
+            });
+
+            // Add hover effects to cards
+            const cards = document.querySelectorAll('.card-hover');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+
+            // Add typing effect to inputs
+            const inputs = document.querySelectorAll('input, textarea, select');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.style.transform = 'scale(1.02)';
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.parentElement.style.transform = 'scale(1)';
+                });
+            });
+        });
+
+        // Add smooth scrolling
+        document.documentElement.style.scrollBehavior = 'smooth';
+
+        // Add particle effect on click
+        document.addEventListener('click', function(e) {
+            const particle = document.createElement('div');
+            particle.style.position = 'fixed';
+            particle.style.left = e.clientX + 'px';
+            particle.style.top = e.clientY + 'px';
+            particle.style.width = '6px';
+            particle.style.height = '6px';
+            particle.style.background = 'linear-gradient(45deg, #667eea, #764ba2)';
+            particle.style.borderRadius = '50%';
+            particle.style.pointerEvents = 'none';
+            particle.style.zIndex = '9999';
+            particle.style.animation = 'particle-burst 0.6s ease-out forwards';
+            
+            document.body.appendChild(particle);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 600);
+        });
+
+        // Add particle burst animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes particle-burst {
+                0% {
+                    transform: scale(0) rotate(0deg);
+                    opacity: 1;
+                }
+                100% {
+                    transform: scale(4) rotate(180deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9657b0f5732d1ddc',t:'MTc1MzU3MjY5My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
